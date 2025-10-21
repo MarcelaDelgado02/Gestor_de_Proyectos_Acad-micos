@@ -1,0 +1,132 @@
+﻿@page
+@model Gestor_de_Proyectos_Académicos.Pages.Registro.RegistroModel
+@{
+    ViewData["Title"] = "Registrarse";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-success text-white text-center">
+                    <h3><i class="fas fa-user-plus"></i> @ViewData["Title"]</h3>
+                </div>
+                <div class="card-body p-4">
+                    <form method="post">
+                        <div class="row">
+                            <!-- Columna Izquierda -->
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Cédula *</label>
+                                    <input asp-for="NuevoUsuario.cedulaUsuario" class="form-control"
+                                           placeholder="Ej: 123456789" required />
+                                    <span asp-validation-for="NuevoUsuario.cedulaUsuario" class="text-danger"></span>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Nombre Completo *</label>
+                                    <input asp-for="NuevoUsuario.nombreUsuario" class="form-control"
+                                           placeholder="Ej: Juan Pérez García" required />
+                                    <span asp-validation-for="NuevoUsuario.nombreUsuario" class="text-danger"></span>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Correo Electrónico *</label>
+                                    <input asp-for="NuevoUsuario.correoUsuario" type="email" class="form-control"
+                                           placeholder="Ej: usuario@ejemplo.com" required />
+                                    <span asp-validation-for="NuevoUsuario.correoUsuario" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <!-- Columna Derecha -->
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Teléfono *</label>
+                                    <input asp-for="NuevoUsuario.telefonoUsuario" class="form-control"
+                                           placeholder="Ej: 8888-8888" required />
+                                    <span asp-validation-for="NuevoUsuario.telefonoUsuario" class="text-danger"></span>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Contraseña *</label>
+                                    <input asp-for="NuevoUsuario.contrasenaUsuario" type="password" class="form-control"
+                                           placeholder="Ingrese su contraseña" required />
+                                    <span asp-validation-for="NuevoUsuario.contrasenaUsuario" class="text-danger"></span>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Rol *</label>
+                                    <select asp-for="NuevoUsuario.rolUsuario" class="form-select" required>
+                                        <option value="">Seleccione un rol</option>
+                                        <option value="1">👨‍🏫 Profesor</option>
+                                        <option value="2">👨‍🎓 Estudiante</option>
+                                    </select>
+                                    <span asp-validation-for="NuevoUsuario.rolUsuario" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mt-3">
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-success w-100 py-2">
+                                    <i class="fas fa-user-plus"></i> Registrar Usuario
+                                </button>
+
+                                <div class="text-center mt-3">
+                                    <a href="/Login" class="btn btn-outline-secondary">
+                                        <i class="fas fa-arrow-left"></i> Volver al Login
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Mensajes de Error -->
+                        @if (!string.IsNullOrEmpty(Model.Error))
+                        {
+                            <div class="alert alert-danger mt-3 text-center">
+                                <i class="fas fa-exclamation-triangle"></i> @Model.Error
+                            </div>
+                        }
+
+                        <!-- Mensajes de Éxito (si permanece en la página) -->
+                        @if (!string.IsNullOrEmpty(Model.Mensaje))
+                        {
+                            <div class="alert alert-success mt-3 text-center">
+                                <i class="fas fa-check-circle"></i> @Model.Mensaje
+                            </div>
+                        }
+                    </form>
+                </div>
+                <div class="card-footer text-muted text-center">
+                    <small>Los campos marcados con * son obligatorios</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+<style>
+    .card {
+        border: none;
+        border-radius: 10px;
+    }
+
+    .card-header {
+        border-radius: 10px 10px 0 0 !important;
+    }
+
+    .btn-success {
+        background-color: #28a745;
+        border: none;
+        border-radius: 5px;
+        font-weight: 500;
+    }
+
+    .btn-success:hover {
+        background-color: #218838;
+    }
+</style>
