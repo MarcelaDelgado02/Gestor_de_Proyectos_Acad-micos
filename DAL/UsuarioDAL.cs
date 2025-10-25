@@ -17,11 +17,11 @@ namespace Gestor_de_Proyectos_Académicos.DAL
                 SqlCommand cmd = new SqlCommand("spLogin", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
 
-                //  PARÁMETROS 
+                //  PARÁMETROS MANDADOS
                 cmd.Parameters.AddWithValue("@CorreoUsuario", correo);
                 cmd.Parameters.AddWithValue("@ContrasenaUsuario", contrasenaHash);
 
-                // PARÁMETROS DE SALIDA 
+                // PARÁMETROS RECIVIDOS
                 cmd.Parameters.Add("@NombreUsuario", SqlDbType.NVarChar, 30).Direction = ParameterDirection.Output;
                 cmd.Parameters.Add("@ResultadoLogin", SqlDbType.Bit).Direction = ParameterDirection.Output;
                 cmd.Parameters.Add("@TomaCedula", SqlDbType.NVarChar, 12).Direction = ParameterDirection.Output;

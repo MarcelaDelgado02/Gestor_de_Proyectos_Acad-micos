@@ -2,18 +2,29 @@
 @model Gestor_de_Proyectos_Académicos.Pages.Login.LoginModel
 @{
     ViewData["Title"] = "Iniciar Sesión";
+    Layout = null;
+        
 }
+<head>
+    <link href="~/css/LoginCSS/Login.css" rel="stylesheet" asp-append-version="true" />
 
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+   
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</head>
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-6">
-            <div class="card shadow">
-                <div class="card-header bg-primary text-white text-center">
-                    <h3>@ViewData["Title"]</h3>
-                </div>
-                <div class="card-body p-4">
+            
+                
+                <div class="card p-4">
                     <form method="post">
-                        <!-- 📧 CORREO ELECTRÓNICO -->
+                        <!--  CORREO ELECTRÓNICO -->
                         <div class="mb-3">
                             <label class="form-label">Correo Electrónico</label>
                             <input type="email" 
@@ -36,10 +47,10 @@
 
                         <button type="submit" class="btn btn-primary w-100 mb-3">Ingresar</button>
 
-                        <!-- 🆕 BOTÓN PARA REGISTRARSE -->
+                        <!--  BOTÓN PARA REGISTRARSE -->
                         <div class="text-center">
-                            <a href="/Registro/Registro" class="btn btn-outline-success w-100">
-                                📝 Crear Nueva Cuenta
+                        <a href="/Registro/Registro" class="btn btn-primary w-100 mb-3">
+                                Crear Nueva Cuenta
                             </a>
                         </div>
 
@@ -57,44 +68,9 @@
                         }
                     </form>
                 </div>
-                <div class="card-footer text-muted text-center">
-                    <small>Sistema de Gestión de Proyectos Académicos</small>
-                </div>
-            </div>
+                
+            
         </div>
     </div>
 </div>
 
-<style>
-    .card {
-        border: none;
-        border-radius: 10px;
-    }
-    
-    .card-header {
-        border-radius: 10px 10px 0 0 !important;
-    }
-    
-    .btn-primary {
-        background-color: #007bff;
-        border: none;
-        border-radius: 5px;
-        font-weight: 500;
-    }
-    
-    .btn-primary:hover {
-        background-color: #0056b3;
-    }
-
-    .btn-outline-success {
-        border: 2px solid #28a745;
-        color: #28a745;
-        border-radius: 5px;
-        font-weight: 500;
-    }
-
-    .btn-outline-success:hover {
-        background-color: #28a745;
-        color: white;
-    }
-</style>

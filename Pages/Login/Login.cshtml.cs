@@ -14,7 +14,7 @@ namespace Gestor_de_Proyectos_Académicos.Pages.Login
             usuarioBLL = new UsuarioBLL();
         }
 
-        //  PROPIEDADES ENLAZADAS (SOLO CORREO Y CONTRASEÑA)
+        //  PROPIEDADES ENLAZADAS 
         [BindProperty]
         public string CorreoUsuario { get; set; } = string.Empty;
 
@@ -50,9 +50,9 @@ namespace Gestor_de_Proyectos_Académicos.Pages.Login
                     HttpContext.Session.SetInt32("Rol", usuario.rolUsuario);
 
                     if (usuario.rolUsuario == 1)
-                        return RedirectToPage("/Proyectos/Index");
+                        return RedirectToPage("/Profesor/Inicio/InicioProf");
                     else
-                        return RedirectToPage("/Tareas/Index");
+                        return RedirectToPage("/Estudiante/Inicio/InicioEst");
                 }
                 else
                 {
