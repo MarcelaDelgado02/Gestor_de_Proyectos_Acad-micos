@@ -2,14 +2,90 @@
 @model Gestor_de_Proyectos_Académicos.Pages.Profesor.Inicio.InicioProfModel
 @{
 }
-<div class="container">
-    <h1>Bienvenido Estudiante</h1>
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Gestión de Proyectos</h2>
 
-    <!-- Mostrar la cédula del usuario -->
-    <div class="alert alert-info">
-        <strong>Cédula del usuario:</strong> @Model.CedulaUsuario
+    @if (!string.IsNullOrEmpty(Model.Mensaje))
+    {
+        <div class="alert alert-info">@Model.Mensaje</div>
+    }
+
+    <!-- 🔹 Formulario para crear proyecto -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-primary text-white">
+            Crear Nuevo Proyecto
+        </div>
+        <div class="card-body">
+            <form method="post" asp-page-handler="CrearProyecto">
+                <div class="mb-3">
+                    <label asp-for="NuevoProyecto.NombreProyecto" class="form-label">Nombre del Proyecto</label>
+                    <input asp-for="NuevoProyecto.NombreProyecto" class="form-control" />
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="NuevoProyecto.DescripcionProyecto" class="form-label">Descripción</label>
+                    <textarea asp-for="NuevoProyecto.DescripcionProyecto" class="form-control"></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="NuevoProyecto.FechaInicioProyecto" class="form-label">Fecha de Inicio</label>
+                    <input asp-for="NuevoProyecto.FechaInicioProyecto" type="datetime-local" class="form-control" />
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="NuevoProyecto.FechaFinalProyecto" class="form-label">Fecha Final</label>
+                    <input asp-for="NuevoProyecto.FechaFinalProyecto" type="datetime-local" class="form-control" />
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="NuevoProyecto.EstadoProyecto" class="form-label">Estado</label>
+                    <select asp-for="NuevoProyecto.EstadoProyecto" class="form-select">
+                        <option value="Activo">Activo</option>
+                        <option value="En progreso">En progreso</option>
+                        <option value="Finalizado">Finalizado</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-success">Crear Proyecto</button>
+            </form>
+        </div>
     </div>
 
-    <!-- Resto del contenido de tu página -->
-    <p>Esta es tu página de inicio como profesor.</p>
+    <!-- 🔹 Lista de proyectos -->
+    <h4>Mis Proyectos</h4>
+
+    @if (Model.Proyectos.Any())
+    {
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                        <th>Inicio</th>
+                        <th>Finalización</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var proyecto in Model.Proyectos)
+                    {
+                        <tr>
+                            <td>@proyecto.NombreProyecto</td>
+                            <td>@proyecto.DescripcionProyecto</td>
+                            <td>@proyecto.FechaInicioProyecto.ToShortDateString()</td>
+                            <td>@proyecto.FechaFinalProyecto.ToShortDateString()</td>
+                            <td>
+                                <span class="badge bg-@proyecto.ColorEstado">@proyecto.EstadoProyecto</span>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <p class="text-muted">No hay proyectos para mostrar.</p>
+    }
 </div>

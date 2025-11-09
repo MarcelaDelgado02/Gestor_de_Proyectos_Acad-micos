@@ -55,6 +55,49 @@ namespace Gestor_de_Proyectos_Académicos.DAL
 
             return proyectos;
         }
+
+        public bool CrearProyecto(string cedulaUsuario, Proyecto nuevoProyecto)
+        {
+            try
+            {
+                using var conexion = new ConexionBD().AbrirConexion();
+                using var cmd = new SqlCommand("spCrearProyecto", conexion);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@CedulaUsuario", cedulaUsuario);
+                cmd.Parameters.AddWithValue("@NombreProyecto", nuevoProyecto.NombreProyecto);
+                cmd.Parameters.AddWithValue("@DescripcionProyecto", nuevoProyecto.DescripcionProyecto ?? (object)DBNull.Value);
+                cmd.Parameters.AddWithValue("@FechaInicioProyecto", nuevoProyecto.FechaInicioProyecto);
+                cmd.Parameters.AddWithValue("@FechaFinalProyecto", nuevoProyecto.FechaFinalProyecto);
+                cmd.Parameters.AddWithValue("@EstadoProyecto", nuevoProyecto.EstadoProyecto ?? "Activo");
+
+
+                var respuestaRol = new SqlParameter("@RespuestaRolP", SqlDbType.Int)
+                {
+                    Direction = ParameterDirection.Output
+                };
+
+                cmd.Parameters.Add(respuestaRol);
+                cmd.ExecuteNonQuery();
+                return true;
+
+            }
+            catch (SqlException ex)
+            {
+
+
+                throw new Exception($"Error SQL al crear el proyecto: {ex.Message}", ex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error general al crear el proyecto: {ex.Message}", ex);
+            }
+
+
+        }
+
+
+
     }
 }
 
