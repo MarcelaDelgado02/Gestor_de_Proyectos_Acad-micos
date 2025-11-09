@@ -3,89 +3,91 @@
 @{
 }
 <div class="container mt-4">
-    <h2 class="text-center mb-4">Gestión de Proyectos</h2>
+    <h2>Bienvenido, @Model.NombreUsuario</h2>
+    <hr />
 
-    @if (!string.IsNullOrEmpty(Model.Mensaje))
-    {
-        <div class="alert alert-info">@Model.Mensaje</div>
-    }
+    <!-- Botón para mostrar el card de creación -->
+    <button class="btn btn-primary mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#cardCrearProyecto" aria-expanded="false" aria-controls="cardCrearProyecto">
+        + Crear nuevo proyecto
+    </button>
 
-    <!-- 🔹 Formulario para crear proyecto -->
-    <div class="card shadow-sm mb-4">
-        <div class="card-header bg-primary text-white">
-            Crear Nuevo Proyecto
-        </div>
-        <div class="card-body">
-            <form method="post" asp-page-handler="CrearProyecto">
-                <div class="mb-3">
-                    <label asp-for="NuevoProyecto.NombreProyecto" class="form-label">Nombre del Proyecto</label>
-                    <input asp-for="NuevoProyecto.NombreProyecto" class="form-control" />
-                </div>
+    <!-- Card colapsable de creación -->
+    <div class="collapse" id="cardCrearProyecto">
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-primary text-white">
+                Crear Proyecto
+            </div>
+            <div class="card-body">
+                <form method="post" asp-page-handler="CrearProyecto">
+                    <div class="mb-3">
+                        <label class="form-label">Nombre del Proyecto</label>
+                        <input asp-for="NuevoProyecto.NombreProyecto" class="form-control" required />
+                    </div>
 
-                <div class="mb-3">
-                    <label asp-for="NuevoProyecto.DescripcionProyecto" class="form-label">Descripción</label>
-                    <textarea asp-for="NuevoProyecto.DescripcionProyecto" class="form-control"></textarea>
-                </div>
+                    <div class="mb-3">
+                        <label class="form-label">Descripción</label>
+                        <textarea asp-for="NuevoProyecto.DescripcionProyecto" class="form-control"></textarea>
+                    </div>
 
-                <div class="mb-3">
-                    <label asp-for="NuevoProyecto.FechaInicioProyecto" class="form-label">Fecha de Inicio</label>
-                    <input asp-for="NuevoProyecto.FechaInicioProyecto" type="datetime-local" class="form-control" />
-                </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Fecha Inicio</label>
+                            <input asp-for="NuevoProyecto.FechaInicioProyecto" type="date" class="form-control" required />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Fecha Final</label>
+                            <input asp-for="NuevoProyecto.FechaFinalProyecto" type="date" class="form-control" required />
+                        </div>
+                    </div>
 
-                <div class="mb-3">
-                    <label asp-for="NuevoProyecto.FechaFinalProyecto" class="form-label">Fecha Final</label>
-                    <input asp-for="NuevoProyecto.FechaFinalProyecto" type="datetime-local" class="form-control" />
-                </div>
+                    <div class="mb-3">
+                        <label class="form-label">Estado</label>
+                        <select asp-for="NuevoProyecto.EstadoProyecto" class="form-select">
+                            <option value="Activo">Activo</option>
+                            <option value="En Progreso">En Progreso</option>
+                            <option value="Finalizado">Finalizado</option>
+                        </select>
+                    </div>
 
-                <div class="mb-3">
-                    <label asp-for="NuevoProyecto.EstadoProyecto" class="form-label">Estado</label>
-                    <select asp-for="NuevoProyecto.EstadoProyecto" class="form-select">
-                        <option value="Activo">Activo</option>
-                        <option value="En progreso">En progreso</option>
-                        <option value="Finalizado">Finalizado</option>
-                    </select>
-                </div>
-
-                <button type="submit" class="btn btn-success">Crear Proyecto</button>
-            </form>
+                    <button type="submit" class="btn btn-success">Guardar Proyecto</button>
+                </form>
+            </div>
         </div>
     </div>
 
-    <!-- 🔹 Lista de proyectos -->
-    <h4>Mis Proyectos</h4>
-
-    @if (Model.Proyectos.Any())
-    {
-        <div class="table-responsive">
-            <table class="table table-bordered table-striped">
-                <thead class="table-dark">
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Descripción</th>
-                        <th>Inicio</th>
-                        <th>Finalización</th>
-                        <th>Estado</th>
-                    </tr>
-                </thead>
-                <tbody>
+    <!-- 📋 Lista de proyectos -->
+    <div class="card shadow-sm">
+        <div class="card-header bg-secondary text-white">
+            Proyectos del Profesor
+        </div>
+        <div class="card-body">
+            @if (!Model.TieneProyectos)
+            {
+                <p class="text-muted">@Model.Mensaje</p>
+            }
+            else
+            {
+                <div class="list-group">
                     @foreach (var proyecto in Model.Proyectos)
                     {
-                        <tr>
-                            <td>@proyecto.NombreProyecto</td>
-                            <td>@proyecto.DescripcionProyecto</td>
-                            <td>@proyecto.FechaInicioProyecto.ToShortDateString()</td>
-                            <td>@proyecto.FechaFinalProyecto.ToShortDateString()</td>
-                            <td>
-                                <span class="badge bg-@proyecto.ColorEstado">@proyecto.EstadoProyecto</span>
-                            </td>
-                        </tr>
+                        <div class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <h5>@proyecto.NombreProyecto</h5>
+                                <p class="mb-1">@proyecto.DescripcionProyecto</p>
+                                <small class="text-muted">
+                                    @proyecto.FechaInicioProyecto.ToShortDateString() - @proyecto.FechaFinalProyecto.ToShortDateString()
+                                </small>
+                            </div>
+                            <span class="badge bg-@proyecto.ColorEstado text-uppercase">@proyecto.EstadoProyecto</span>
+                        </div>
                     }
-                </tbody>
-            </table>
+                </div>
+            }
         </div>
-    }
-    else
+    </div>
+
+    @if (!string.IsNullOrEmpty(Model.Mensaje))
     {
-        <p class="text-muted">No hay proyectos para mostrar.</p>
+        <div class="alert alert-info mt-3">@Model.Mensaje</div>
     }
 </div>
