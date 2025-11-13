@@ -96,6 +96,76 @@ namespace Gestor_de_Proyectos_Académicos.DAL
 
         }
 
+        public bool EditarProyecto(string cedulaUsuario, Proyecto proyecto) {
+            try
+            {
+                using var conexion = new ConexionBD().AbrirConexion();
+                using var cmd = new SqlCommand("spModificarProyecto", conexion);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@CedulaUsuario", cedulaUsuario);
+                cmd.Parameters.AddWithValue("@IdProyecto", proyecto.IdProyecto);
+                cmd.Parameters.AddWithValue("@NombreProyecto", proyecto.NombreProyecto);
+                cmd.Parameters.AddWithValue("@DescripcionProyecto", proyecto.DescripcionProyecto);
+                cmd.Parameters.AddWithValue("@FechaInicioProyecto", proyecto.FechaInicioProyecto);
+                cmd.Parameters.AddWithValue("@FechaFinalProyecto", proyecto.FechaFinalProyecto);
+                cmd.Parameters.AddWithValue("@EstadoProyecto", proyecto.EstadoProyecto);
+
+                var respuestaRol = new SqlParameter("@RespuestaRolP", SqlDbType.Int)
+                {
+                    Direction = ParameterDirection.Output
+                };
+                cmd.Parameters.Add(respuestaRol);
+                cmd.ExecuteNonQuery();
+                return true;
+
+
+            }
+            catch (SqlException ex) {
+
+                throw new Exception($"Error SQL al modificar el proyecto: {ex.Message}", ex);
+
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception($"Error general al modificar el proyecto: {ex.Message}", ex);
+            }
+        
+        }
+
+        public bool EliminarProyecto(string cedulaUsuario, int idProyecto) {
+
+            try
+            {
+                using var conexion = new ConexionBD().AbrirConexion();
+                using var cmd = new SqlCommand("spEliminarProyecto", conexion);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@CedulaUsuario", cedulaUsuario);
+                cmd.Parameters.AddWithValue("@IdProyecto", idProyecto);
+
+                var respuestaRol = new SqlParameter("@RespuestaRolP", SqlDbType.Int)
+                {
+
+                    Direction = ParameterDirection.Output
+                };
+                cmd.Parameters.Add(respuestaRol);
+                cmd.ExecuteNonQuery();
+
+                return true;
+
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception($"Error SQL al eliminar el proyecto: {ex.Message}", ex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error general al eliminar el proyecto: {ex.Message}", ex);
+            }
+        }
+
 
 
     }

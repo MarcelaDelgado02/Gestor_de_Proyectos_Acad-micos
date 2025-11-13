@@ -18,7 +18,7 @@ namespace Gestor_de_Proyectos_Académicos.Pages.Profesor.Inicio
             proyectoBLL = new ProyectoBLL();
         }
 
-        // 🧾 Propiedades del usuario y vista
+        //  Propiedades del usuario y vista
         [BindProperty]
         public Proyecto NuevoProyecto { get; set; } = new Proyecto();
         public string CedulaUsuario { get; set; }
@@ -27,7 +27,7 @@ namespace Gestor_de_Proyectos_Académicos.Pages.Profesor.Inicio
         public string Mensaje { get; set; } = string.Empty;
         public bool TieneProyectos => Proyectos != null && Proyectos.Any();
 
-        // ✅ Cargar proyectos al entrar a la página
+        // Cargar proyectos al entrar a la página
         public void OnGet()
         {
             CedulaUsuario = HttpContext.Session.GetString("Cedula");
@@ -102,6 +102,41 @@ namespace Gestor_de_Proyectos_Académicos.Pages.Profesor.Inicio
                 "eliminado" => "danger",
                 _ => "secondary"
             };
+        }
+
+
+        public IActionResult OnPostEditarProyecto()
+        {
+            CedulaUsuario = HttpContext.Session.GetString("Cedula");
+
+            try
+            {
+                proyectoBLL.EditarProyecto(CedulaUsuario, NuevoProyecto);
+                TempData["Mensaje"] = "Proyecto modificado correctamente.";
+            }
+            catch (Exception ex)
+            {
+                TempData["Mensaje"] = $" Error al editar el proyecto: {ex.Message}";
+            }
+
+            return RedirectToPage();
+        }
+
+        public IActionResult OnPostEliminarProyecto(int idProyecto)
+        {
+            CedulaUsuario = HttpContext.Session.GetString("Cedula");
+
+            try
+            {
+                proyectoBLL.EliminarProyecto(CedulaUsuario, idProyecto);
+                TempData["Mensaje"] = " Proyecto eliminado correctamente.";
+            }
+            catch (Exception ex)
+            {
+                TempData["Mensaje"] = $" Error al eliminar el proyecto: {ex.Message}";
+            }
+
+            return RedirectToPage();
         }
     }
 }

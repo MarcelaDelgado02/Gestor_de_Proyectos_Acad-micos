@@ -1,10 +1,18 @@
 ﻿@page
 @model Gestor_de_Proyectos_Académicos.Pages.Profesor.Inicio.InicioProfModel
 @{
+    ViewData["Title"] = "Inicio Profesor";
 }
+
 <div class="container mt-4">
-    <h2>Bienvenido, @Model.NombreUsuario</h2>
+    <h2>Bienvenido, @Model.NombreUsuario 👋</h2>
     <hr />
+
+    <!-- Mensajes globales -->
+    @if (TempData["Mensaje"] != null)
+    {
+        <div class="alert alert-info">@TempData["Mensaje"]</div>
+    }
 
     <!-- Botón para mostrar el card de creación -->
     <button class="btn btn-primary mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#cardCrearProyecto" aria-expanded="false" aria-controls="cardCrearProyecto">
@@ -26,7 +34,7 @@
 
                     <div class="mb-3">
                         <label class="form-label">Descripción</label>
-                        <textarea asp-for="NuevoProyecto.DescripcionProyecto" class="form-control"></textarea>
+                        <textarea asp-for="NuevoProyecto.DescripcionProyecto" class="form-control" rows="3"></textarea>
                     </div>
 
                     <div class="row">
@@ -49,13 +57,15 @@
                         </select>
                     </div>
 
-                    <button type="submit" class="btn btn-success">Guardar Proyecto</button>
+                    <button type="submit" class="btn btn-success">
+                        💾 Guardar Proyecto
+                    </button>
                 </form>
             </div>
         </div>
     </div>
 
-    <!-- 📋 Lista de proyectos -->
+    <!-- Lista de proyectos -->
     <div class="card shadow-sm">
         <div class="card-header bg-secondary text-white">
             Proyectos del Profesor
@@ -78,16 +88,80 @@
                                     @proyecto.FechaInicioProyecto.ToShortDateString() - @proyecto.FechaFinalProyecto.ToShortDateString()
                                 </small>
                             </div>
-                            <span class="badge bg-@proyecto.ColorEstado text-uppercase">@proyecto.EstadoProyecto</span>
+
+                            <div class="d-flex align-items-center gap-2">
+                                <span class="badge bg-@proyecto.ColorEstado text-uppercase">@proyecto.EstadoProyecto</span>
+
+                                <!-- Botón Editar -->
+                                <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal"
+                                        data-bs-target="#editarProyectoModal_@proyecto.IdProyecto">
+                                    🖊️
+                                </button>
+
+                                <!-- Botón Eliminar -->
+                                <form method="post" asp-page-handler="EliminarProyecto" onsubmit="return confirm('¿Seguro que deseas eliminar este proyecto?');">
+                                    <input type="hidden" name="idProyecto" value="@proyecto.IdProyecto" />
+                                    <button type="submit" class="btn btn-outline-danger btn-sm">🗑️</button>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- Modal Editar Proyecto -->
+                        <div class="modal fade" id="editarProyectoModal_@proyecto.IdProyecto" tabindex="-1" aria-labelledby="editarProyectoLabel_@proyecto.IdProyecto" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header bg-primary text-white">
+                                        <h5 class="modal-title" id="editarProyectoLabel_@proyecto.IdProyecto">Editar Proyecto</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form method="post" asp-page-handler="EditarProyecto">
+                                            <input type="hidden" asp-for="NuevoProyecto.IdProyecto" value="@proyecto.IdProyecto" />
+
+                                            <div class="mb-3">
+                                                <label class="form-label">Nombre del Proyecto</label>
+                                                <input asp-for="NuevoProyecto.NombreProyecto" class="form-control" value="@proyecto.NombreProyecto" required />
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label class="form-label">Descripción</label>
+                                                <textarea asp-for="NuevoProyecto.DescripcionProyecto" class="form-control" rows="3">@proyecto.DescripcionProyecto</textarea>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Fecha Inicio</label>
+                                                    <input asp-for="NuevoProyecto.FechaInicioProyecto" type="date"
+                                                           value="@proyecto.FechaInicioProyecto.ToString("yyyy-MM-dd")" class="form-control" required />
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Fecha Final</label>
+                                                    <input asp-for="NuevoProyecto.FechaFinalProyecto" type="date"
+                                                           value="@proyecto.FechaFinalProyecto.ToString("yyyy-MM-dd")" class="form-control" required />
+                                                </div>
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label class="form-label">Estado</label>
+                                                <select asp-for="NuevoProyecto.EstadoProyecto" class="form-select">
+                                                    <option value="Activo" selected="@(proyecto.EstadoProyecto == "Activo")">Activo</option>
+                                                    <option value="En Progreso" selected="@(proyecto.EstadoProyecto == "En Progreso")">En Progreso</option>
+                                                    <option value="Finalizado" selected="@(proyecto.EstadoProyecto == "Finalizado")">Finalizado</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                                <button type="submit" class="btn btn-success">💾 Guardar cambios</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     }
                 </div>
             }
         </div>
     </div>
-
-    @if (!string.IsNullOrEmpty(Model.Mensaje))
-    {
-        <div class="alert alert-info mt-3">@Model.Mensaje</div>
-    }
 </div>
