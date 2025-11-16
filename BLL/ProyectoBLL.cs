@@ -91,4 +91,5 @@ namespace Gestor_de_Proyectos_Académicos.BLL
                 throw new Exception("No se pudo eliminar el proyecto.");
         }
     }
+
 }

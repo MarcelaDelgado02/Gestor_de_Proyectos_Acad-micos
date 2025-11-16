@@ -1,0 +1,94 @@
+﻿@page
+@model Gestor_de_Proyectos_Académicos.Pages.Estudiante.Tareas.TareasEstModel
+@{
+    ViewData["Title"] = "Mis tareas del proyecto";
+}
+
+<h2 class="text-center mt-4">Mis tareas del proyecto</h2>
+
+<div class="text-center mt-3">
+    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalCrear">
+        Crear Tarea
+    </button>
+
+    <a class="btn btn-secondary" asp-page="/Estudiante/Proyectos/ListaProyectos">
+        Volver
+    </a>
+</div>
+
+<div class="mt-4 text-center text-danger">
+    @Model.Mensaje
+</div>
+
+@if (Model.Tareas != null && Model.Tareas.Count > 0)
+{
+    <table class="table table-bordered table-striped mt-4">
+        <thead>
+            <tr>
+                <th>Título</th>
+                <th>Descripción</th>
+                <th>Fecha Límite</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var t in Model.Tareas)
+            {
+                <tr>
+                    <td>@t.tituloTarea</td>
+                    <td>@t.despripcionTarea</td>
+                    <td>
+                        @(t.fechaLimite?.ToShortDateString() ?? "Sin fecha")
+                    </td>
+                    <td>@t.estadoTarea</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p class="text-center mt-3">Aún no hay tareas para este proyecto.</p>
+}
+
+<!-- Modal Crear Tarea -->
+<div class="modal fade" id="modalCrear" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <form method="post" asp-page-handler="Crear">
+
+                <div class="modal-header">
+                    <h5 class="modal-title">Crear Tarea</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+                    <input type="hidden" name="IdProyecto" value="@Model.IdProyecto" />
+
+                    <div class="mb-3">
+                        <label class="form-label">Título</label>
+                        <input class="form-control" name="Titulo" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Descripción</label>
+                        <textarea class="form-control" name="Descripcion" required></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Fecha Límite</label>
+                        <input type="date" class="form-control" name="FechaLimite" required />
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Crear</button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>

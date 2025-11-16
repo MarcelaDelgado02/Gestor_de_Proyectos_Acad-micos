@@ -22,12 +22,12 @@
     public class ReportePersonal
     {
         public string NombrePersonal { get; set; }
-        public string NombreTarea  { get; set; }
-        public string Estado {  get; set; } 
-        public DateTime? FechaCompletado { get; set; }  
+        public string NombreTarea { get; set; }
+        public string Estado { get; set; }
+        public DateTime? FechaCompletado { get; set; }
         public DateTime FechaVencimiento { get; set; }
 
-
+    }
 
 }
 

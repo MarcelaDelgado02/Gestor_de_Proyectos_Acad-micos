@@ -61,7 +61,7 @@ namespace Gestor_de_Proyectos_Académicos.Pages.Profesor.Inicio
             if (string.IsNullOrEmpty(CedulaUsuario))
             {
                 Mensaje = "No se encontró la cédula del usuario.";
-                return Page();
+                return RedirectToPage();
             }
 
             try
@@ -79,7 +79,7 @@ namespace Gestor_de_Proyectos_Académicos.Pages.Profesor.Inicio
                 Mensaje = $"Error al crear el proyecto: {ex.Message}";
             }
 
-            return Page();
+            return RedirectToPage();
         }
 
         
