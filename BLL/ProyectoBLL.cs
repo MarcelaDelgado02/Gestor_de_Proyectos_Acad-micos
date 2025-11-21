@@ -51,10 +51,11 @@ namespace Gestor_de_Proyectos_Académicos.BLL
                 nuevoProyecto.EstadoProyecto = "Activo";
 
             var exito = proyectoDAL.CrearProyecto(cedulaUsuario, nuevoProyecto);
-            if (exito) { 
+            if (!exito)
+            {
                 throw new Exception("No se pudo crear el proyecto en la base de datos.");
-
             }
+
         }
 
 

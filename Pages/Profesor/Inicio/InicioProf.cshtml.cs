@@ -7,10 +7,6 @@ namespace Gestor_de_Proyectos_Académicos.Pages.Profesor.Inicio
 {
     public class InicioProfModel : PageModel
     {
-
-
-
-
         private readonly ProyectoBLL proyectoBLL;
 
         public InicioProfModel()
@@ -18,7 +14,6 @@ namespace Gestor_de_Proyectos_Académicos.Pages.Profesor.Inicio
             proyectoBLL = new ProyectoBLL();
         }
 
-        //  Propiedades del usuario y vista
         [BindProperty]
         public Proyecto NuevoProyecto { get; set; } = new Proyecto();
         public string CedulaUsuario { get; set; }
@@ -27,11 +22,13 @@ namespace Gestor_de_Proyectos_Académicos.Pages.Profesor.Inicio
         public string Mensaje { get; set; } = string.Empty;
         public bool TieneProyectos => Proyectos != null && Proyectos.Any();
 
-        // Cargar proyectos al entrar a la página
         public void OnGet()
         {
+            // ❌ ESTA LÍNEA SE ELIMINA
+            // string cedula = HttpContext.Session.GetString("Cedula");
+
+            // ✔ ESTA ES LA ÚNICA CORRECTA
             CedulaUsuario = HttpContext.Session.GetString("Cedula");
-            NombreUsuario = HttpContext.Session.GetString("Nombre");
 
             if (string.IsNullOrEmpty(CedulaUsuario))
             {
@@ -53,7 +50,6 @@ namespace Gestor_de_Proyectos_Académicos.Pages.Profesor.Inicio
             }
         }
 
-        
         public IActionResult OnPostCrearProyecto()
         {
             CedulaUsuario = HttpContext.Session.GetString("Cedula");
@@ -67,22 +63,16 @@ namespace Gestor_de_Proyectos_Académicos.Pages.Profesor.Inicio
             try
             {
                 proyectoBLL.CrearProyecto(CedulaUsuario, NuevoProyecto);
-                Mensaje = "Proyecto creado correctamente.";
-
-                // Limpiar campos y recargar lista
-                NuevoProyecto = new Proyecto();
-                Proyectos = proyectoBLL.ObtenerProyectos(CedulaUsuario);
-                PrepararDatosVista();
+                TempData["Mensaje"] = "Proyecto creado correctamente.";
             }
             catch (Exception ex)
             {
-                Mensaje = $"Error al crear el proyecto: {ex.Message}";
+                TempData["Mensaje"] = $"Error al crear el proyecto: {ex.Message}";
             }
 
             return RedirectToPage();
         }
 
-        
         private void PrepararDatosVista()
         {
             foreach (var proyecto in Proyectos)
@@ -104,7 +94,6 @@ namespace Gestor_de_Proyectos_Académicos.Pages.Profesor.Inicio
             };
         }
 
-
         public IActionResult OnPostEditarProyecto()
         {
             CedulaUsuario = HttpContext.Session.GetString("Cedula");
@@ -116,7 +105,7 @@ namespace Gestor_de_Proyectos_Académicos.Pages.Profesor.Inicio
             }
             catch (Exception ex)
             {
-                TempData["Mensaje"] = $" Error al editar el proyecto: {ex.Message}";
+                TempData["Mensaje"] = $"Error al editar el proyecto: {ex.Message}";
             }
 
             return RedirectToPage();
@@ -129,15 +118,14 @@ namespace Gestor_de_Proyectos_Académicos.Pages.Profesor.Inicio
             try
             {
                 proyectoBLL.EliminarProyecto(CedulaUsuario, idProyecto);
-                TempData["Mensaje"] = " Proyecto eliminado correctamente.";
+                TempData["Mensaje"] = "Proyecto eliminado correctamente.";
             }
             catch (Exception ex)
             {
-                TempData["Mensaje"] = $" Error al eliminar el proyecto: {ex.Message}";
+                TempData["Mensaje"] = $"Error al eliminar el proyecto: {ex.Message}";
             }
 
             return RedirectToPage();
         }
     }
 }
-

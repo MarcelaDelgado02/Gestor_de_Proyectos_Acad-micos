@@ -5,7 +5,7 @@
 }
 
 <div class="container mt-4">
-    <h2>Bienvenido, @Model.NombreUsuario 👋</h2>
+    
     <hr />
 
     <!-- Mensajes globales -->
@@ -125,7 +125,9 @@
 
                                             <div class="mb-3">
                                                 <label class="form-label">Descripción</label>
-                                                <textarea asp-for="NuevoProyecto.DescripcionProyecto" class="form-control" rows="3">@proyecto.DescripcionProyecto</textarea>
+                                                <textarea name="DescripcionProyecto" class="form-control" rows="3">@proyecto.DescripcionProyecto</textarea>
+
+
                                             </div>
 
                                             <div class="row">

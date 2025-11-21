@@ -1,0 +1,17 @@
+﻿@model Gestor_de_Proyectos_Académicos.Entidades.Usuario
+
+@if (!string.IsNullOrEmpty(Model.cedulaUsuario))
+{
+    <div class="alert alert-light border mb-3">
+        <strong>@Model.nombreUsuario</strong>
+        <span class="text-muted">(@(Model.rolUsuario == 1 ? "Profesor" : "Estudiante"))</span>
+        <br />
+        <small>Cédula: @Model.cedulaUsuario</small>
+    </div>
+}
+else
+{
+    <div class="text-danger">
+        Usuario no autenticado
+    </div>
+}
