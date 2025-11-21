@@ -9,5 +9,6 @@
         public string estadoTarea { get; set; } 
         public int IDProyecto { get; set; } 
         public int IDUsuario { get; set; }
+        public int IdAsignado { get; set; }
     }
 }

@@ -50,17 +50,18 @@ namespace Gestor_de_Proyectos_Académicos.DAL
             return tareas;
         }
 
-        public void CrearTarea(Tarea tarea, string cedulaUsuario) {
-
+        public void CrearTarea(Tarea tarea, string cedulaUsuario) // Cambiar a string
+        {
             try
             {
                 using var conexion = new ConexionBD().AbrirConexion();
                 using var cmd = new SqlCommand("spCrearTarea", conexion);
-
                 cmd.CommandType = CommandType.StoredProcedure;
+
+                // Pasar la cédula como string
                 cmd.Parameters.AddWithValue("@CedulaUsuario", cedulaUsuario);
                 cmd.Parameters.AddWithValue("@IdProyecto", tarea.IDProyecto);
-                cmd.Parameters.AddWithValue("@IdAsignado", tarea.IDUsuario);
+                cmd.Parameters.AddWithValue("@IdAsignado", tarea.IdAsignado);
                 cmd.Parameters.AddWithValue("@Titulo", tarea.tituloTarea);
                 cmd.Parameters.AddWithValue("@Descripcion", tarea.despripcionTarea);
                 cmd.Parameters.AddWithValue("@FechaLimite", tarea.fechaLimite);
@@ -71,16 +72,14 @@ namespace Gestor_de_Proyectos_Académicos.DAL
                     Direction = ParameterDirection.Output
                 };
 
-                cmd.Parameters.Add(rolSalida);  
+                cmd.Parameters.Add(rolSalida);
                 cmd.ExecuteNonQuery();
-
             }
             catch (SqlException ex)
             {
                 throw new Exception($"Error SQL al crear la tarea: {ex.Message}", ex);
             }
         }
-
         public void EliminarTarea(string cedulaUsuario, int idTarea) {
             try
             {

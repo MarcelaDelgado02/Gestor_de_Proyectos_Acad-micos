@@ -2,6 +2,8 @@ using Gestor_de_Proyectos_Académicos.BLL;
 using Gestor_de_Proyectos_Académicos.Entidades;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System;
+using System.Collections.Generic;
 
 namespace Gestor_de_Proyectos_Académicos.Pages.Estudiante.Tareas
 {
@@ -19,15 +21,30 @@ namespace Gestor_de_Proyectos_Académicos.Pages.Estudiante.Tareas
         public int IdProyecto { get; set; }
 
         // Campos para crear tarea
-        [BindProperty] public string Titulo { get; set; }
-        [BindProperty] public string Descripcion { get; set; }
-        [BindProperty] public DateTime FechaLimite { get; set; }
+        [BindProperty]
+        public string Titulo { get; set; }
+
+        [BindProperty]
+        public string Descripcion { get; set; }
+
+        [BindProperty]
+        public DateTime FechaLimite { get; set; }
 
         public List<Tarea> Tareas { get; set; } = new();
+
         public string Mensaje { get; set; } = "";
 
         public void OnGet()
         {
+            int idUsuario = HttpContext.Session.GetInt32("IdUsuario") ?? 0;
+
+
+            if (idUsuario == 0)
+            {
+                Mensaje = "La sesión expiró. Inicie sesión nuevamente.";
+                return;
+            }
+
             try
             {
                 if (IdProyecto <= 0)
@@ -38,10 +55,8 @@ namespace Gestor_de_Proyectos_Académicos.Pages.Estudiante.Tareas
 
                 Tareas = tareaBLL.ObtenerTareasPorProyecto(IdProyecto);
 
-                if (Tareas == null || Tareas.Count == 0)
-                {
+                if (Tareas == null || !Tareas.Any())
                     Mensaje = "Aún no se han asignado tareas para este proyecto.";
-                }
             }
             catch (Exception ex)
             {
@@ -51,6 +66,15 @@ namespace Gestor_de_Proyectos_Académicos.Pages.Estudiante.Tareas
 
         public IActionResult OnPostCrear()
         {
+            int idUsuario = HttpContext.Session.GetInt32("IdUsuario") ?? 0;
+            string cedulaUsuario = HttpContext.Session.GetString("Cedula") ?? "";
+
+            if (idUsuario == 0 || string.IsNullOrEmpty(cedulaUsuario))
+            {
+                Mensaje = "La sesión expiró. Inicie sesión nuevamente.";
+                return Page();
+            }
+
             try
             {
                 if (IdProyecto <= 0)
@@ -59,29 +83,28 @@ namespace Gestor_de_Proyectos_Académicos.Pages.Estudiante.Tareas
                     return Page();
                 }
 
-                string cedula = HttpContext.Session.GetString("Cedula");
-
                 var nuevaTarea = new Tarea
                 {
                     IDProyecto = IdProyecto,
-                    IDUsuario = 0, // estudiante se asigna a sí mismo (SP valida)
+                    IDUsuario = idUsuario,
+                    IdAsignado = idUsuario,
                     tituloTarea = Titulo,
                     despripcionTarea = Descripcion,
                     fechaLimite = FechaLimite,
                     estadoTarea = "Pendiente"
                 };
 
-                tareaBLL.CrearTarea(nuevaTarea, cedula);
+                // Pasar la cédula, no el ID
+                tareaBLL.CrearTarea(nuevaTarea, cedulaUsuario);
 
-                // Actualizar tabla
                 return RedirectToPage(new { IdProyecto = IdProyecto });
             }
             catch (Exception ex)
             {
                 Mensaje = ex.Message;
-                OnGet();
                 return Page();
             }
         }
+
     }
 }

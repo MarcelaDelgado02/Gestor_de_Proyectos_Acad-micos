@@ -9,10 +9,12 @@ namespace Gestor_de_Proyectos_Académicos.ViewComponents
         {
             var usuario = new Usuario
             {
+                IdUsuario = HttpContext.Session.GetInt32("IdUsuario") ?? 0,
                 cedulaUsuario = HttpContext.Session.GetString("Cedula") ?? "",
                 nombreUsuario = HttpContext.Session.GetString("Nombre") ?? "",
                 correoUsuario = HttpContext.Session.GetString("Correo") ?? "",
                 rolUsuario = HttpContext.Session.GetInt32("Rol") ?? 0
+
             };
 
             return View(usuario);

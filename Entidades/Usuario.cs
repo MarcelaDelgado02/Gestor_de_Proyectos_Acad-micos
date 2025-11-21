@@ -2,11 +2,10 @@
 
 namespace Gestor_de_Proyectos_Académicos.Entidades
 {
-    /// <summary>
-    /// Representa un usuario del sistema con todos los campos necesarios para login y registro
-    /// </summary>
+    
     public class Usuario
     {
+        public int IdUsuario { get; set; }
         public string cedulaUsuario { get; set; } = string.Empty;
         public string nombreUsuario { get; set; } = string.Empty;
         public string correoUsuario { get; set; } = string.Empty;
@@ -26,9 +25,10 @@ namespace Gestor_de_Proyectos_Académicos.Entidades
         }
 
         // Constructor completo para registro
-        public Usuario(string cedula, string nombre, string correo, string telefono, string contrasena, int rol)
+        public Usuario(string cedula,int idUsuario, string nombre, string correo, string telefono, string contrasena, int rol)
         {
             cedulaUsuario = cedula;
+            idUsuario = idUsuario;
             nombreUsuario = nombre;
             correoUsuario = correo;
             telefonoUsuario = telefono;

@@ -18,17 +18,21 @@ namespace Gestor_de_Proyectos_Académicos.BLL
         }
 
 
-        public void CrearTarea(Tarea tarea, string cedulaUsuario) {
-
-            if (string.IsNullOrWhiteSpace(tarea.tituloTarea)) {
+        public void CrearTarea(Tarea tarea, string cedulaUsuario) // Cambiar a string
+        {
+            if (string.IsNullOrWhiteSpace(tarea.tituloTarea))
                 throw new Exception("El título de la tarea es obligatorio.");
 
-            }
             if (tarea.fechaLimite == null)
                 throw new Exception("Debe indicar una fecha límite.");
 
-            tareaDAL.CrearTarea(tarea, cedulaUsuario);
+            if (tarea.IdAsignado <= 0)
+                throw new Exception("Debe indicar un usuario asignado válido.");
 
+            if (string.IsNullOrWhiteSpace(cedulaUsuario))
+                throw new Exception("Cédula de usuario no válida.");
+
+            tareaDAL.CrearTarea(tarea, cedulaUsuario);
         }
 
         public void EliminarTarea(string cedulaUsuario, int idTarea)

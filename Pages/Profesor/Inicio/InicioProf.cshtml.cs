@@ -24,10 +24,7 @@ namespace Gestor_de_Proyectos_Académicos.Pages.Profesor.Inicio
 
         public void OnGet()
         {
-            // ❌ ESTA LÍNEA SE ELIMINA
-            // string cedula = HttpContext.Session.GetString("Cedula");
-
-            // ✔ ESTA ES LA ÚNICA CORRECTA
+            
             CedulaUsuario = HttpContext.Session.GetString("Cedula");
 
             if (string.IsNullOrEmpty(CedulaUsuario))

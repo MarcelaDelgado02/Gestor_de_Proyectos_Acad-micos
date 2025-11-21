@@ -23,7 +23,7 @@ namespace Gestor_de_Proyectos_Académicos.Pages.Estudiante.inicio
         {
             try
             {
-                // ✔ CORRECTO: Obtener cédula de sesión
+              
                 CedulaUsuario = HttpContext.Session.GetString("Cedula");
 
                 if (string.IsNullOrEmpty(CedulaUsuario))

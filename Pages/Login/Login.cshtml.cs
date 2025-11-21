@@ -48,6 +48,8 @@ namespace Gestor_de_Proyectos_Académicos.Pages.Login
                     HttpContext.Session.SetString("Nombre", usuario.nombreUsuario);
                     HttpContext.Session.SetString("Correo", usuario.correoUsuario);
                     HttpContext.Session.SetInt32("Rol", usuario.rolUsuario);
+                    HttpContext.Session.SetInt32("IdUsuario", usuario.IdUsuario);
+
 
                     if (usuario.rolUsuario == 1)
                         return RedirectToPage("/Profesor/Inicio/InicioProf");

@@ -9,7 +9,7 @@ namespace Gestor_de_Proyectos_Académicos.DAL
     {
         private ConexionBD conexion = new ConexionBD();
 
-        
+
         public Usuario? Login(string correo, byte[] contrasenaHash)
         {
             using (SqlConnection conn = conexion.AbrirConexion())
@@ -17,17 +17,17 @@ namespace Gestor_de_Proyectos_Académicos.DAL
                 SqlCommand cmd = new SqlCommand("spLogin", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
 
-                //  PARÁMETROS MANDADOS
+                // PARÁMETROS DE ENTRADA
                 cmd.Parameters.AddWithValue("@CorreoUsuario", correo);
                 cmd.Parameters.AddWithValue("@ContrasenaUsuario", contrasenaHash);
 
-                // PARÁMETROS RECIVIDOS
+                // PARÁMETROS DE SALIDA
                 cmd.Parameters.Add("@NombreUsuario", SqlDbType.NVarChar, 30).Direction = ParameterDirection.Output;
                 cmd.Parameters.Add("@ResultadoLogin", SqlDbType.Bit).Direction = ParameterDirection.Output;
                 cmd.Parameters.Add("@TomaCedula", SqlDbType.NVarChar, 12).Direction = ParameterDirection.Output;
                 cmd.Parameters.Add("@RolUsuario", SqlDbType.Int).Direction = ParameterDirection.Output;
+                cmd.Parameters.Add("@TomaIdUsuario", SqlDbType.Int).Direction = ParameterDirection.Output;
 
-                // EJECUTAR
                 cmd.ExecuteNonQuery();
 
                 bool loginCorrecto = Convert.ToBoolean(cmd.Parameters["@ResultadoLogin"].Value);
@@ -36,6 +36,7 @@ namespace Gestor_de_Proyectos_Académicos.DAL
                 {
                     return new Usuario
                     {
+                        IdUsuario = Convert.ToInt32(cmd.Parameters["@TomaIdUsuario"].Value),
                         cedulaUsuario = cmd.Parameters["@TomaCedula"].Value?.ToString() ?? "",
                         nombreUsuario = cmd.Parameters["@NombreUsuario"].Value?.ToString() ?? "",
                         correoUsuario = correo,
