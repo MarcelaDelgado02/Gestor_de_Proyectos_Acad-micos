@@ -7,10 +7,19 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Gestor_de_Proyectos_Académicos.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+
 </head>
 <body>
     <header>
         @await Component.InvokeAsync("UserInfo")
+        <form asp-area="Identity" asp-page="/Login/Login" method="post">
+            <button type="submit" class="btn ">
+                <i class="fa-solid fa-right-from-bracket" style="color: #0d6efd;"></i>
+                Cerrar sesión
+            </button>
+        </form>
     </header>
 
     <div class="container">

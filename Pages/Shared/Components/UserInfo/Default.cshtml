@@ -4,11 +4,9 @@
 {
     <div class="alert alert-light border mb-3">
         <strong>@Model.nombreUsuario</strong>
-        <span class="text-muted">(@(Model.rolUsuario == 1 ? "Profesor" : "Estudiante"))</span>
+        <span class="text-muted">@(Model.rolUsuario == 1 ? "Profesor" : "Estudiante")</span>
         <br />
-        <small>Cédula: @Model.cedulaUsuario</small>
-        <br />
-        <small>ID Usuario: @Model.IdUsuario</small>   <!-- 👈 AGREGADO -->
+        
     </div>
 }
 else

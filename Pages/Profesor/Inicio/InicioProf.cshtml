@@ -40,11 +40,11 @@
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Fecha Inicio</label>
-                            <input asp-for="NuevoProyecto.FechaInicioProyecto" type="date" class="form-control" required />
+                            <input asp-for="NuevoProyecto.FechaInicioProyecto" type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" required />
                         </div>
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Fecha Final</label>
-                            <input asp-for="NuevoProyecto.FechaFinalProyecto" type="date" class="form-control" required />
+                            <input asp-for="NuevoProyecto.FechaFinalProyecto" type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")"  required />
                         </div>
                     </div>
 
@@ -92,17 +92,31 @@
                             <div class="d-flex align-items-center gap-2">
                                 <span class="badge bg-@proyecto.ColorEstado text-uppercase">@proyecto.EstadoProyecto</span>
 
+
+
                                 <!-- Botón Editar -->
-                                <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal"
+                                <button class="btn" data-bs-toggle="modal"
                                         data-bs-target="#editarProyectoModal_@proyecto.IdProyecto">
-                                    🖊️
+                                    <span>
+                                        <i class="fa-solid fa-pen-to-square" style="color: #00101c;"></i>
+                                    </span>
                                 </button>
 
                                 <!-- Botón Eliminar -->
                                 <form method="post" asp-page-handler="EliminarProyecto" onsubmit="return confirm('¿Seguro que deseas eliminar este proyecto?');">
                                     <input type="hidden" name="idProyecto" value="@proyecto.IdProyecto" />
-                                    <button type="submit" class="btn btn-outline-danger btn-sm">🗑️</button>
+                                    <button type="submit" class="btn ">
+                                        <span>
+                                            <i class="fa-solid fa-trash" style="color: #00101c;"></i>
+                                        </span>
+                                    </button>
                                 </form>
+
+                                <a href="/Profesor/TareasProfesor/TareasProfesor?IdProyecto=@proyecto.IdProyecto"
+                                   class="btn btn-sm btn-primary">
+                                    <i class="fas fa-tasks me-1"></i> Ver Tareas
+                                </a>
+
                             </div>
                         </div>
 
