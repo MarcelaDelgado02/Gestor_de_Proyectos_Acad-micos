@@ -35,27 +35,19 @@ namespace Gestor_de_Proyectos_Académicos.BLL
 
         }
 
-        public void CrearProyecto(string cedulaUsuario, Proyecto nuevoProyecto) {
+        public int CrearProyecto(string cedulaUsuario, Proyecto nuevoProyecto)
+        {
+            int respuestaRol;
 
-            if (string.IsNullOrWhiteSpace(nuevoProyecto.NombreProyecto))
-                throw new ArgumentException("El nombre del proyecto no puede estar vacío.");
+            int idProyecto = proyectoDAL.CrearProyecto(cedulaUsuario, nuevoProyecto, out respuestaRol);
 
-            if (nuevoProyecto.FechaInicioProyecto > nuevoProyecto.FechaFinalProyecto)
-                throw new ArgumentException("La fecha de inicio no puede ser posterior a la fecha final.");
+            if (respuestaRol != 1)
+                throw new Exception("Solo los profesores pueden crear proyectos.");
 
-            if (nuevoProyecto.FechaFinalProyecto < DateTime.Now)
-                throw new ArgumentException("La fecha de finalización no puede ser anterior a la fecha actual.");
+            if (idProyecto <= 0)
+                throw new Exception("No se pudo obtener el Id del proyecto creado.");
 
-            
-            if (string.IsNullOrWhiteSpace(nuevoProyecto.EstadoProyecto))
-                nuevoProyecto.EstadoProyecto = "Activo";
-
-            var exito = proyectoDAL.CrearProyecto(cedulaUsuario, nuevoProyecto);
-            if (!exito)
-            {
-                throw new Exception("No se pudo crear el proyecto en la base de datos.");
-            }
-
+            return idProyecto;
         }
 
 

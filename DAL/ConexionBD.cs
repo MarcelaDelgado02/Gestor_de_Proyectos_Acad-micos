@@ -8,7 +8,7 @@ namespace Gestor_de_Proyectos_Académicos.DAL
 
         public ConexionBD()
         {
-            connectionString = "Server=VALEAGUERO\\SQLEXPRESS;Database=GestordeProyectosAcademicos_db;Integrated Security=true;TrustServerCertificate=true;Encrypt=false";
+            connectionString = "Server=localhost;Database=GestordeProyectosAcademicos_db;Integrated Security=true;TrustServerCertificate=true;Encrypt=false";
         }
 
         public SqlConnection AbrirConexion()

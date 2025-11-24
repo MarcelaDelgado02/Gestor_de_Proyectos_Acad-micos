@@ -1,5 +1,6 @@
 using Gestor_de_Proyectos_Académicos.BLL;
 using Gestor_de_Proyectos_Académicos.Entidades;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Gestor_de_Proyectos_Académicos.Pages.Estudiante.inicio
@@ -7,11 +8,15 @@ namespace Gestor_de_Proyectos_Académicos.Pages.Estudiante.inicio
     public class InicioEstModel : PageModel
     {
         private readonly ProyectoBLL proyectoBLL;
+        
+
 
         public InicioEstModel()
         {
             proyectoBLL = new ProyectoBLL();
         }
+
+       
 
         public string CedulaUsuario { get; set; }
         public string NombreUsuario { get; set; }
@@ -44,7 +49,12 @@ namespace Gestor_de_Proyectos_Académicos.Pages.Estudiante.inicio
                 Mensaje = $"Error al cargar proyectos: {ex.Message}";
                 Proyectos = new List<Proyecto>();
             }
+
+          
         }
+
+        
+
 
         private void PrepararDatosVista()
         {

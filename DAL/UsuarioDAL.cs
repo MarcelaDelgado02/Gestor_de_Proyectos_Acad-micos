@@ -107,6 +107,98 @@ namespace Gestor_de_Proyectos_Académicos.DAL
             }
         }
 
+
+        
+            public List<Usuario> ObtenerEstudiantesPorProyecto(int idProyecto)
+            {
+                List<Usuario> lista = new List<Usuario>();
+
+                using (var conexion = new ConexionBD().AbrirConexion())
+                using (var cmd = new SqlCommand("spObtenerEstudiantesPorProyecto", conexion))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@idProyecto", idProyecto);
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            lista.Add(new Usuario
+                            {
+                                IdUsuario = reader.GetInt32(0),
+                                nombreUsuario = reader.GetString(1)
+                            });
+                        }
+                    }
+                }
+
+                return lista;
+            }
+
+            public List<Usuario> ObtenerEstudiantesAsignarProyecto(int idProyecto)
+            {
+                List<Usuario> lista = new List<Usuario>();
+
+                using (var conexion = new ConexionBD().AbrirConexion())
+                using (var cmd = new SqlCommand("spObtenerEstudiantesAsignarProyecto", conexion))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@idProyecto", idProyecto);
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            lista.Add(new Usuario
+                            {
+                                IdUsuario = reader.GetInt32(0),
+                                nombreUsuario = reader.GetString(1)
+                            });
+                        }
+                    }
+                }
+
+                return lista;
+            }
+
+        public void AsignarEstudianteAProyecto(int idProyecto, int idUsuario, string cedulaProfesor)
+        {
+            try
+            {
+                using var conexion = new ConexionBD().AbrirConexion();
+                using var cmd = new SqlCommand("spAsignarEstudianteProyecto", conexion);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@IdProyecto", idProyecto);
+                cmd.Parameters.AddWithValue("@IdUsuario", idUsuario);
+                cmd.Parameters.AddWithValue("@CedulaProfesor", cedulaProfesor);
+
+                var respuestaRol = new SqlParameter("@RespuestaRol", SqlDbType.Int)
+                {
+                    Direction = ParameterDirection.Output
+                };
+
+                cmd.Parameters.Add(respuestaRol);
+
+                cmd.ExecuteNonQuery();
+
+                int rol = (int)respuestaRol.Value;
+
+                // Si el SP devolvió que no es profesor o algún error, lo reportamos.
+                if (rol != 1)
+                {
+                    throw new Exception("El usuario que asigna no tiene permisos para asignar estudiantes.");
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception($"Error SQL al asignar estudiante: {ex.Message}", ex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error al asignar estudiante: {ex.Message}", ex);
+            }
+        }
     }
 
 }

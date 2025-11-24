@@ -110,5 +110,26 @@ namespace Gestor_de_Proyectos_Académicos.BLL
             Console.WriteLine($"Longitud hash: {hash.Length} bytes");
             Console.WriteLine($"Hash (hex): {BitConverter.ToString(hash).Replace("-", "")}");
         }
+
+
+        public List<Usuario> ObtenerEstudiantesPorProyecto(int idProyecto) {
+            return usuarioDAL.ObtenerEstudiantesPorProyecto(idProyecto);
+
+        }
+
+        public List<Usuario> ObtenerEstudiantesAsignarProyecto(int idProyecto)
+        {
+            return usuarioDAL.ObtenerEstudiantesAsignarProyecto(idProyecto);
+        }
+
+        public void AsignarEstudiantesAProyecto(int idProyecto, List<int> idsEstudiantes, string cedulaProfesor)
+        {
+            foreach (var idEstudiante in idsEstudiantes)
+            {
+                usuarioDAL.AsignarEstudianteAProyecto(idProyecto, idEstudiante, cedulaProfesor);
+            }
+        }
+
+
     }
 }
