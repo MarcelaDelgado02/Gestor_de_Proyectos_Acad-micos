@@ -85,7 +85,7 @@ namespace Gestor_de_Proyectos_Académicos.DAL
                             {
 
                                 EstudianteId = reader.GetInt32("EstudianteId"),
-                                NombreEstudiante = reader.GetString("NombreEstudiante"),
+                                NombreEstudiate = reader.GetString("NombreEstudiante"),
                                 TareasCompletadasEstudiante = reader.GetInt32("TareasCompletadas"),
                                 ProyectoId = proyectoId,
                                 NombreProyecto = reader.GetString("NombreProyecto")
