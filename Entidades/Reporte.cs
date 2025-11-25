@@ -3,7 +3,7 @@ using System.Data;
 
 namespace Gestor_de_Proyectos_Académicos.Entidades
 {
-    public class Reporte
+    public class ReporteFiltros
     {
 
         public int ProyectoId { get; set; }
@@ -16,7 +16,7 @@ namespace Gestor_de_Proyectos_Académicos.Entidades
         public int TareasCompletadasEstudiante { get; set; }
 
         public List<Tarea> TareasPersonales { get; set; }
-
+        public string NombreEstudiante { get; internal set; }
     }
 
     public class RepoteFiltros

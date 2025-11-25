@@ -1,6 +1,5 @@
 ﻿using Gestor_de_Proyectos_Académicos.Entidades;
 using Microsoft.Data.SqlClient;
-using Microsoft.Identity.Client;
 using System.Data;
 
 namespace Gestor_de_Proyectos_Académicos.DAL
@@ -18,10 +17,10 @@ namespace Gestor_de_Proyectos_Académicos.DAL
             _connectionString = connectionString;
         }
 
-        public List<Reporte> ObtenerReporteProyectos(RepoteFiltros filtros)
+        public List<ReporteFiltros> ObtenerReporteProyectos(RepoteFiltros filtros)
 
         {
-            var reporte = new List<Reporte>();
+            var reporte = new List<ReporteFiltros>();
 
             using (var connection = new SqlConnection(_connectionString))
             {
@@ -42,7 +41,7 @@ namespace Gestor_de_Proyectos_Académicos.DAL
                     {
                         while (reader.Read())
                         {
-                            reporte.Add(new Reporte
+                            reporte.Add(new ReporteFiltros
                             {
                                 EstudianteId = reader.GetInt32("EstudianteId"),
                                 NombreEstudiate = reader.GetString("NombreEstudiante"),
@@ -61,10 +60,10 @@ namespace Gestor_de_Proyectos_Académicos.DAL
         }
 
         //Reporte de estudiantes en proyecto 
-        public List<Reporte> ObtenerReporteEstudiantesProyecto(int proyectoId)
+        public List<ReporteFiltros> ObtenerReporteEstudiantesProyecto(int proyectoId)
         {
 
-            var reportes = new List<Reporte>();
+            var reportes = new List<ReporteFiltros>();
 
             using (var connection = new SqlConnection(_connectionString))
 
@@ -81,7 +80,7 @@ namespace Gestor_de_Proyectos_Académicos.DAL
                     {
                         while (reader.Read())
                         {
-                            reportes.Add(new Reporte
+                            reportes.Add(new ReporteFiltros
                             {
 
                                 EstudianteId = reader.GetInt32("EstudianteId"),
@@ -100,11 +99,11 @@ namespace Gestor_de_Proyectos_Académicos.DAL
                 return reportes;
             }
         }
-
-        private List<Reporte> ObtenerReportePersonal(int estudianteId)
+        // Reporte de estudiantes en proyecto
+        private List<ReporteFiltros> ObtenerReportePersonal(int estudianteId)
         {
 
-            var reportes = new List<Reporte>();
+            var reportes = new List<ReporteFiltros>();
 
 
             using (var connection = new SqlConnection(_connectionString))
@@ -124,7 +123,7 @@ namespace Gestor_de_Proyectos_Académicos.DAL
 
                         while (reader.Read())
                         {
-                            reportes.Add(new Reporte
+                            reportes.Add(new ReporteFiltros
                             {
                                 ProyectoId = reader.GetInt32("ProyectoId"),
                                 NombreProyecto = reader.GetString("NombreProyecto"),
