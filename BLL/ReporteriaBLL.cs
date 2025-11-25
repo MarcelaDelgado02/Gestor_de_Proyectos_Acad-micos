@@ -1,11 +1,12 @@
 ﻿using System;
 using Gestor_de_Proyectos_Académicos.Entidades;
 using Gestor_de_Proyectos_Académicos.DAL;
+using Gestor_de_Proyectos_Académicos.Pages.Reporte_Proyecto;
 
 
 namespace Gestor_de_Proyectos_Académicos.BLL
 {
-    public class Reporteria
+    public class ReporteriaBLL
     {
 
         private readonly ReporteriaDAL reporteriaDAL;
@@ -65,6 +66,11 @@ namespace Gestor_de_Proyectos_Académicos.BLL
                 throw new Exception($"Error al generar reporte personal :{ ex.Message}");   
 
             }
+        }
+
+        internal List<Reportes> GenerarReporteEstudiantesProyecto(ReporteFiltros filtros)
+        {
+            throw new NotImplementedException();
         }
     }
 }
