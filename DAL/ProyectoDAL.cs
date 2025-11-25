@@ -56,8 +56,10 @@ namespace Gestor_de_Proyectos_Académicos.DAL
             return proyectos;
         }
 
-        public bool CrearProyecto(string cedulaUsuario, Proyecto nuevoProyecto)
+        public int CrearProyecto(string cedulaUsuario, Proyecto nuevoProyecto, out int respuestaRol)
         {
+            respuestaRol = 0;
+
             try
             {
                 using var conexion = new ConexionBD().AbrirConexion();
@@ -71,30 +73,39 @@ namespace Gestor_de_Proyectos_Académicos.DAL
                 cmd.Parameters.AddWithValue("@FechaFinalProyecto", nuevoProyecto.FechaFinalProyecto);
                 cmd.Parameters.AddWithValue("@EstadoProyecto", nuevoProyecto.EstadoProyecto ?? "Activo");
 
-
-                var respuestaRol = new SqlParameter("@RespuestaRolP", SqlDbType.Int)
+                // OUTPUT del rol
+                var rolOutput = new SqlParameter("@RespuestaRolP", SqlDbType.Int)
                 {
                     Direction = ParameterDirection.Output
                 };
+                cmd.Parameters.Add(rolOutput);
 
-                cmd.Parameters.Add(respuestaRol);
-                cmd.ExecuteNonQuery();
-                return true;
+                // Ejecutamos y leemos el Id del proyecto creado
+                int idProyectoCreado = 0;
 
+                using (var reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        idProyectoCreado = Convert.ToInt32(reader["IdProyectoCreado"]);
+                    }
+                }
+
+                // capturamos después del ExecuteReader
+                respuestaRol = (int)rolOutput.Value;
+
+                return idProyectoCreado;
             }
             catch (SqlException ex)
             {
-
-
                 throw new Exception($"Error SQL al crear el proyecto: {ex.Message}", ex);
             }
             catch (Exception ex)
             {
                 throw new Exception($"Error general al crear el proyecto: {ex.Message}", ex);
             }
-
-
         }
+
 
         public bool EditarProyecto(string cedulaUsuario, Proyecto proyecto) {
             try
@@ -166,6 +177,7 @@ namespace Gestor_de_Proyectos_Académicos.DAL
             }
         }
 
+        
 
 
     }

@@ -1,7 +1,149 @@
 ﻿@page
 @model Gestor_de_Proyectos_Académicos.Pages.Profesor.TareasProfesor.TareasProfesorModel
 @{
+    ViewData["Title"] = "Gestión de Tareas - Profesor";
 }
-<h1>
-    tareas
-</h1>
+
+<div class="container">
+    <h2>Gestión de Tareas - Proyecto @Model.IdProyecto</h2>
+
+    @if (!string.IsNullOrEmpty(Model.Mensaje))
+    {
+        <div class="alert alert-success">@Model.Mensaje</div>
+    }
+
+    @if (!string.IsNullOrEmpty(Model.MensajeError))
+    {
+        <div class="alert alert-danger">@Model.MensajeError</div>
+    }
+
+    <!-- Formulario para crear tarea -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5>Crear Nueva Tarea</h5>
+        </div>
+        <div class="card-body">
+            <form method="post" asp-page-handler="Crear">
+                <input type="hidden" asp-for="IdProyecto" />
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label">Título</label>
+                            <input asp-for="Titulo" class="form-control" required />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label">Asignar a</label>
+                            <select asp-for="IdAsignado" class="form-control" required>
+                                <option value="">Seleccionar estudiante</option>
+                                @foreach (var estudiante in Model.Estudiantes)
+                                {
+                                    <option value="@estudiante.IdUsuario">@estudiante.nombreUsuario</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Descripción</label>
+                    <textarea asp-for="Descripcion" class="form-control" rows="3"></textarea>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label">Fecha Límite</label>
+                            <input asp-for="FechaLimite" type="datetime-local" class="form-control" required />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label">Estado</label>
+                            <select asp-for="Estado" class="form-control" required>
+                                @foreach (var estado in Model.Estados)
+                                {
+                                    <option value="@estado.Value">@estado.Text</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Crear Tarea</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Lista de tareas -->
+    <div class="card">
+        <div class="card-header">
+            <h5>Tareas del Proyecto</h5>
+        </div>
+        <div class="card-body">
+            @if (Model.Tareas.Any())
+            {
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Título</th>
+                            <th>Descripción</th>
+                            <th>Asignado a</th>
+                            <th>Fecha Límite</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var tarea in Model.Tareas)
+                        {
+                            <tr>
+                                <td>@tarea.TituloTarea</td>
+                                <td>@tarea.DescripcionTarea</td>
+                                <td>
+                                    @{
+                                        var estudiante = Model.Estudiantes.FirstOrDefault(e => e.IdUsuario == tarea.IDUsuario);
+                                        @(estudiante?.nombreUsuario ?? "N/A")
+                                    }
+                                </td>
+                                <td>@tarea.FechaLimiteTarea.ToString("dd/MM/yyyy HH:mm")</td>
+                                <td>
+                                    <span class="badge bg-@(tarea.EstadoTarea == "Completada" ? "success" : tarea.EstadoTarea == "En Progreso" ? "warning" : "secondary")">
+                                        @tarea.EstadoTarea
+                                    </span>
+                                </td>
+                                <td>
+                                    <div class="btn-group">
+                                        <form method="post" asp-page-handler="ModificarEstado" class="d-inline">
+                                            <input type="hidden" asp-for="IdProyecto" />
+                                            <input type="hidden" name="idTarea" value="@tarea.IdTarea" />
+                                            @if (tarea.EstadoTarea != "Completada")
+                                            {
+                                                <button type="submit" name="nuevoEstado" value="Completada" class="btn btn-success btn-sm">
+                                                    Completar
+                                                </button>
+                                            }
+                                        </form>
+                                        <form method="post" asp-page-handler="Eliminar" class="d-inline">
+                                            <input type="hidden" asp-for="IdProyecto" />
+                                            <input type="hidden" name="idTarea" value="@tarea.IdTarea" />
+                                            <button type="submit" class="btn btn-danger btn-sm"
+                                                    onclick="return confirm('¿Eliminar esta tarea?')">
+                                                Eliminar
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <div class="alert alert-info">No hay tareas registradas.</div>
+            }
+        </div>
+    </div>
+</div>

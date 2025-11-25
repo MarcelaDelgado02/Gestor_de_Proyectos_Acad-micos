@@ -40,11 +40,13 @@
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Fecha Inicio</label>
-                            <input asp-for="NuevoProyecto.FechaInicioProyecto" type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" required />
+                            <input asp-for="NuevoProyecto.FechaInicioProyecto" type="date"
+                                   class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" required />
                         </div>
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Fecha Final</label>
-                            <input asp-for="NuevoProyecto.FechaFinalProyecto" type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")"  required />
+                            <input asp-for="NuevoProyecto.FechaFinalProyecto" type="date"
+                                   class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" required />
                         </div>
                     </div>
 
@@ -57,10 +59,26 @@
                         </select>
                     </div>
 
+                    
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Asignar Estudiantes al Proyecto</label>
+                        <select asp-for="EstudiantesSeleccionados"
+                                class="form-select"
+                                multiple
+                                size="8">
+                            @foreach (var est in Model.EstudiantesDisponibles)
+                            {
+                                <option value="@est.IdUsuario">@est.nombreUsuario </option>
+                            }
+                        </select>
+                        <small class="text-muted">Mantén presionado Ctrl para seleccionar varios estudiantes.</small>
+                    </div>
+
                     <button type="submit" class="btn btn-success">
                         💾 Guardar Proyecto
                     </button>
                 </form>
+
             </div>
         </div>
     </div>
