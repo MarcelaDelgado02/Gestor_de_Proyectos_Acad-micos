@@ -1,4 +1,5 @@
 using Gestor_de_Proyectos_Académicos.BLL;
+using Gestor_de_Proyectos_Académicos.DAL;
 using Gestor_de_Proyectos_Académicos.Entidades;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -12,7 +13,8 @@ namespace Gestor_de_Proyectos_Académicos.Pages.Estudiante.Tareas
         // Constructor con inyección de dependencias
         public TareasEstModel(TareaBLL tareaBLL)
         {
-            tareaBLL = tareaBLL;
+            this.tareaBLL = tareaBLL;
+            
         }
 
         [BindProperty(SupportsGet = true)]
