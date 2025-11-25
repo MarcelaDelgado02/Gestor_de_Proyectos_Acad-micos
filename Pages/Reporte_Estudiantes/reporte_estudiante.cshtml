@@ -1,4 +1,27 @@
 ﻿@page
 @model Gestor_de_Proyectos_Académicos.Pages.Reporte_Estudiantes.reporte_estudianteModel
 @{
+    ViewData["Title"] = "Reporte de Estudiantes";
 }
+
+<h2>Reporte de Estudiantes - @Model.NombreProyecto</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Estudiante</th>
+            <th>Tareas Completadas</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Reporte)
+        {
+            <tr>
+                <td>@item.NombreEstudiante</td>
+                <td>@item.TareasCompletadasEstudiante</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-page="/Reportes/Proyectos" class="btn btn-secondary">Volver</a>
