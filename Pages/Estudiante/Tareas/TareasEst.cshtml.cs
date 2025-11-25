@@ -2,46 +2,44 @@ using Gestor_de_Proyectos_Académicos.BLL;
 using Gestor_de_Proyectos_Académicos.Entidades;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System;
 using System.Collections.Generic;
-
 namespace Gestor_de_Proyectos_Académicos.Pages.Estudiante.Tareas
 {
     public class TareasEstModel : PageModel
     {
         private readonly TareaBLL tareaBLL;
 
-        public TareasEstModel()
+        // Constructor con inyección de dependencias
+        public TareasEstModel(TareaBLL tareaBLL)
         {
-            tareaBLL = new TareaBLL();
+            tareaBLL = tareaBLL;
         }
 
-        // Recibe por GET y POST
         [BindProperty(SupportsGet = true)]
         public int IdProyecto { get; set; }
 
-        // Campos para crear tarea
         [BindProperty]
-        public string Titulo { get; set; }
+        public string Titulo { get; set; } = string.Empty;
 
         [BindProperty]
-        public string Descripcion { get; set; }
+        public string Descripcion { get; set; } = string.Empty;
 
         [BindProperty]
-        public DateTime FechaLimite { get; set; }
+        public DateTime FechaLimite { get; set; } = DateTime.Now.AddDays(7);
 
         public List<Tarea> Tareas { get; set; } = new();
 
-        public string Mensaje { get; set; } = "";
+        [TempData]
+        public string Mensaje { get; set; } = string.Empty;
+        public string MensajeError { get; set; } = string.Empty;
 
         public void OnGet()
         {
             int idUsuario = HttpContext.Session.GetInt32("IdUsuario") ?? 0;
 
-
             if (idUsuario == 0)
             {
-                Mensaje = "La sesión expiró. Inicie sesión nuevamente.";
+                MensajeError = "La sesión expiró. Inicie sesión nuevamente.";
                 return;
             }
 
@@ -49,18 +47,20 @@ namespace Gestor_de_Proyectos_Académicos.Pages.Estudiante.Tareas
             {
                 if (IdProyecto <= 0)
                 {
-                    Mensaje = "Proyecto no válido.";
+                    MensajeError = "Proyecto no válido.";
                     return;
                 }
 
                 Tareas = tareaBLL.ObtenerTareasPorProyecto(IdProyecto);
 
-                if (Tareas == null || !Tareas.Any())
+                if (!Tareas.Any())
+                {
                     Mensaje = "Aún no se han asignado tareas para este proyecto.";
+                }
             }
             catch (Exception ex)
             {
-                Mensaje = $"Error al cargar tareas: {ex.Message}";
+                MensajeError = $"Error al cargar tareas: {ex.Message}";
             }
         }
 
@@ -71,7 +71,7 @@ namespace Gestor_de_Proyectos_Académicos.Pages.Estudiante.Tareas
 
             if (idUsuario == 0 || string.IsNullOrEmpty(cedulaUsuario))
             {
-                Mensaje = "La sesión expiró. Inicie sesión nuevamente.";
+                MensajeError = "La sesión expiró. Inicie sesión nuevamente.";
                 return Page();
             }
 
@@ -79,29 +79,35 @@ namespace Gestor_de_Proyectos_Académicos.Pages.Estudiante.Tareas
             {
                 if (IdProyecto <= 0)
                 {
-                    Mensaje = "Proyecto inválido.";
+                    MensajeError = "Proyecto inválido.";
                     return Page();
                 }
 
                 var nuevaTarea = new Tarea
                 {
                     IDProyecto = IdProyecto,
-                    IDUsuario = idUsuario,
-                    IdAsignado = idUsuario,
-                    tituloTarea = Titulo,
-                    despripcionTarea = Descripcion,
-                    fechaLimite = FechaLimite,
-                    estadoTarea = "Pendiente"
+                    TituloTarea = Titulo,
+                    DescripcionTarea = Descripcion,
+                    IDUsuario = idUsuario, // El estudiante se asigna a sí mismo
+                    FechaLimiteTarea = FechaLimite,
+                    EstadoTarea = "Pendiente"
                 };
 
-                // Pasar la cédula, no el ID
                 tareaBLL.CrearTarea(nuevaTarea, cedulaUsuario);
 
-                return RedirectToPage(new { IdProyecto = IdProyecto });
+                Mensaje = "Tarea creada exitosamente";
+                TempData["Mensaje"] = Mensaje;
+
+                // Limpiar el formulario
+                Titulo = string.Empty;
+                Descripcion = string.Empty;
+                FechaLimite = DateTime.Now.AddDays(7);
+
+                return RedirectToPage(new { IdProyecto });
             }
             catch (Exception ex)
             {
-                Mensaje = ex.Message;
+                MensajeError = ex.Message;
                 return Page();
             }
         }

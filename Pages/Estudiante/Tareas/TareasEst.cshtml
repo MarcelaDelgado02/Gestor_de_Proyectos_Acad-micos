@@ -35,12 +35,12 @@
             @foreach (var t in Model.Tareas)
             {
                 <tr>
-                    <td>@t.tituloTarea</td>
-                    <td>@t.despripcionTarea</td>
+                    <td>@t.TituloTarea</td>
+                    <td>@t.DescripcionTarea</td>
                     <td>
-                        @(t.fechaLimite?.ToShortDateString() ?? "Sin fecha")
+                        @(t.FechaLimiteTarea.ToShortDateString() ?? "Sin fecha")
                     </td>
-                    <td>@t.estadoTarea</td>
+                    <td>@t.EstadoTarea</td>
                 </tr>
             }
         </tbody>

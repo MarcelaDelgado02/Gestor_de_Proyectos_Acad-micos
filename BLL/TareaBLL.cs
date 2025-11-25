@@ -17,16 +17,15 @@ namespace Gestor_de_Proyectos_Académicos.BLL
             return tareaDAL.ObtenerTareasPorProyecto(idProyecto);
         }
 
-
-        public void CrearTarea(Tarea tarea, string cedulaUsuario) // Cambiar a string
+        public void CrearTarea(Tarea tarea, string cedulaUsuario)
         {
-            if (string.IsNullOrWhiteSpace(tarea.tituloTarea))
+            if (string.IsNullOrWhiteSpace(tarea.TituloTarea))
                 throw new Exception("El título de la tarea es obligatorio.");
 
-            if (tarea.fechaLimite == null)
+            if (tarea.FechaLimiteTarea == DateTime.MinValue) // 👈 CAMBIADO: Validar fecha mínima
                 throw new Exception("Debe indicar una fecha límite.");
 
-            if (tarea.IdAsignado <= 0)
+            if (tarea.IDUsuario <= 0) // 👈 CAMBIADO: Usar IDUsuario en lugar de IdAsignado
                 throw new Exception("Debe indicar un usuario asignado válido.");
 
             if (string.IsNullOrWhiteSpace(cedulaUsuario))
@@ -45,5 +44,7 @@ namespace Gestor_de_Proyectos_Académicos.BLL
             tareaDAL.ModificarTarea(cedulaUsuario, tarea);
         }
     }
+
+   
 }
 

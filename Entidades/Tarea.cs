@@ -2,13 +2,16 @@
 {
     public class Tarea
     {
-        public int idTarea { get; set; } 
-        public string tituloTarea { get; set;} 
-        public string despripcionTarea { get; set; } 
-        public DateTime? fechaLimite { get; set; } 
-        public string estadoTarea { get; set; } 
-        public int IDProyecto { get; set; } 
-        public int IDUsuario { get; set; }
-        public int IdAsignado { get; set; }
+        public int IdTarea { get; set; }
+        public string TituloTarea { get; set; } = string.Empty;
+        public string DescripcionTarea { get; set; } = string.Empty; 
+        public DateTime FechaLimiteTarea { get; set; } 
+        public string EstadoTarea { get; set; } 
+        public int IDProyecto { get; set; }
+        public int IDUsuario { get; set; } 
+        public int IDUsuarioCreador { get; set; } 
+        public DateTime FechaCreacion { get; set; } 
+
+       
     }
 }
