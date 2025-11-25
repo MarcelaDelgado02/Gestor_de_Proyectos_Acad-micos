@@ -199,6 +199,37 @@ namespace Gestor_de_Proyectos_Académicos.DAL
                 throw new Exception($"Error al asignar estudiante: {ex.Message}", ex);
             }
         }
+
+        public int ObtenerRolPorCedula(string cedula)
+        {
+            try
+            {
+                using var conn = conexion.AbrirConexion();
+                using var cmd = new SqlCommand("spVerificarROL", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@CedulaUsuario", cedula);
+
+                var salidaRol = new SqlParameter("@RespuestaRol", SqlDbType.Int)
+                {
+                    Direction = ParameterDirection.Output
+                };
+                cmd.Parameters.Add(salidaRol);
+
+                cmd.ExecuteNonQuery();
+
+                return Convert.ToInt32(salidaRol.Value);
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception($"Error SQL al verificar rol: {ex.Message}", ex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error general al verificar rol: {ex.Message}", ex);
+            }
+        }
+
     }
 
 }

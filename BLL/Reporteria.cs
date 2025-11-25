@@ -5,7 +5,7 @@ using Gestor_de_Proyectos_Académicos.DAL;
 
 namespace Gestor_de_Proyectos_Académicos.BLL
 {
-    public class Reporteria
+    public class ReporteriaBLL
     {
 
         private readonly ReporteriaDAL reporteriaDAL;
@@ -16,7 +16,7 @@ namespace Gestor_de_Proyectos_Académicos.BLL
             _reporteriaDal = new ReporteriaDAL(connectionString);
         }
 
-        public List<ReporteFiltros> GenerarReporteProyectos(ReporteFiltros filtros)
+        public List<ReporteFiltros> GenerarReporteProyectos(RepoteFiltros filtros)
         {
             try
             {

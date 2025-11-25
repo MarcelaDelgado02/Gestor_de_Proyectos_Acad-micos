@@ -20,16 +20,17 @@ namespace Gestor_de_Proyectos_Académicos.DAL
                 using var lector = cmd.ExecuteReader();
                 while (lector.Read())
                 {
-                    if (lector.FieldCount == 1 && lector.GetName(0) == "Mensaje")
-                        break;
-
                     var tarea = new Tarea
                     {
                         IdTarea = lector.GetInt32(lector.GetOrdinal("IdTarea")),
                         TituloTarea = lector.GetString(lector.GetOrdinal("TituloTarea")),
-                        DescripcionTarea = lector.IsDBNull(lector.GetOrdinal("DescripcionTarea")) ? "" : lector.GetString(lector.GetOrdinal("DescripcionTarea")),
+                        DescripcionTarea = lector.GetString(lector.GetOrdinal("DescripcionTarea")),
                         IDUsuario = lector.GetInt32(lector.GetOrdinal("IDUsuario")),
-                        FechaLimiteTarea = lector.GetDateTime(lector.GetOrdinal("FechaLimiteTarea")), // 
+                        CedulaEstudiante = lector.GetString(lector.GetOrdinal("CedulaEstudiante")),
+                        NombreEstudiante = lector.GetString(lector.GetOrdinal("NombreEstudiante")),
+                        IDUsuarioCreador = lector.GetInt32(lector.GetOrdinal("IDUsuarioCreador")),
+                        FechaCreacion = lector.GetDateTime(lector.GetOrdinal("FechaCreacion")),
+                        FechaLimiteTarea = lector.GetDateTime(lector.GetOrdinal("FechaLimiteTarea")),
                         EstadoTarea = lector.GetString(lector.GetOrdinal("EstadoTarea")),
                         IDProyecto = idProyecto
                     };
@@ -37,17 +38,14 @@ namespace Gestor_de_Proyectos_Académicos.DAL
                     tareas.Add(tarea);
                 }
             }
-            catch (SqlException ex)
-            {
-                throw new Exception($"Error SQL al obtener tareas: {ex.Message}", ex);
-            }
             catch (Exception ex)
             {
-                throw new Exception($"Error general al obtener tareas: {ex.Message}", ex);
+                throw new Exception($"Error al obtener tareas: {ex.Message}", ex);
             }
 
             return tareas;
         }
+
 
         public void CrearTarea(Tarea tarea, string cedulaUsuario)
         {
@@ -138,6 +136,27 @@ namespace Gestor_de_Proyectos_Académicos.DAL
 
 
         }
+
+        public void ActualizarEstadoTareaEstudiante(int idTarea, string cedulaEstudiante, string nuevoEstado)
+        {
+            try
+            {
+                using var conexion = new ConexionBD().AbrirConexion();
+                using var cmd = new SqlCommand("sp_ActualizarEstadoTareaEstudiante", conexion);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@id_tarea", idTarea);
+                cmd.Parameters.AddWithValue("@cedula_estudiante", cedulaEstudiante);
+                cmd.Parameters.AddWithValue("@nuevo_estado", nuevoEstado);
+
+                cmd.ExecuteNonQuery();
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception($"Error SQL al actualizar estado de tarea: {ex.Message}", ex);
+            }
+        }
+
     }
 }
 

@@ -52,8 +52,9 @@ namespace Gestor_de_Proyectos_Académicos.Pages.Estudiante.Tareas
                     MensajeError = "Proyecto no válido.";
                     return;
                 }
+                string cedula = HttpContext.Session.GetString("Cedula") ?? "";
+                Tareas = tareaBLL.ObtenerTareasPorProyecto(IdProyecto, cedula);
 
-                Tareas = tareaBLL.ObtenerTareasPorProyecto(IdProyecto);
 
                 if (!Tareas.Any())
                 {
@@ -113,6 +114,31 @@ namespace Gestor_de_Proyectos_Académicos.Pages.Estudiante.Tareas
                 return Page();
             }
         }
+
+        public IActionResult OnPostActualizarEstado(int idTarea, string nuevoEstado)
+        {
+            string cedulaEstudiante = HttpContext.Session.GetString("Cedula") ?? "";
+
+            if (string.IsNullOrEmpty(cedulaEstudiante))
+            {
+                MensajeError = "La sesión ha expirado. Inicie sesión nuevamente.";
+                return Page();
+            }
+
+            try
+            {
+                tareaBLL.ActualizarEstadoTareaEstudiante(idTarea, cedulaEstudiante, nuevoEstado);
+
+                TempData["Mensaje"] = "Estado de la tarea actualizado correctamente.";
+                return RedirectToPage(new { IdProyecto });
+            }
+            catch (Exception ex)
+            {
+                MensajeError = $"Error al actualizar estado: {ex.Message}";
+                return Page();
+            }
+        }
+
 
     }
 }

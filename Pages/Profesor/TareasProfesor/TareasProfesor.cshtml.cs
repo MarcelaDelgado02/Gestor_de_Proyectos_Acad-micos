@@ -57,7 +57,10 @@ namespace Gestor_de_Proyectos_Académicos.Pages.Profesor.TareasProfesor
 
                 }
 
-                Tareas = tareaBLL.ObtenerTareasPorProyecto(IdProyecto);
+                string cedulaUsuario = HttpContext.Session.GetString("Cedula") ?? "";
+
+                Tareas = tareaBLL.ObtenerTareasPorProyecto(IdProyecto, cedulaUsuario);
+
                 Estudiantes = usuarioBLL.ObtenerEstudiantesPorProyecto(IdProyecto);
                 Estados = new List<SelectListItem>
                 {
@@ -167,7 +170,10 @@ namespace Gestor_de_Proyectos_Académicos.Pages.Profesor.TareasProfesor
                 }
 
                 // Buscar la tarea existente
-                var tareas = tareaBLL.ObtenerTareasPorProyecto(IdProyecto);
+                
+
+                var tareas = tareaBLL.ObtenerTareasPorProyecto(IdProyecto, cedulaUsuario);
+
                 var tarea = tareas.FirstOrDefault(t => t.IdTarea == idTarea);
 
                 if (tarea != null)

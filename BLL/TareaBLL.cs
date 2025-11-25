@@ -6,15 +6,32 @@ namespace Gestor_de_Proyectos_Académicos.BLL
     public class TareaBLL
     {
         private readonly TareaDAL tareaDAL;
+        private readonly UsuarioDAL usuarioDAL; 
 
         public TareaBLL()
         {
             tareaDAL = new TareaDAL();
+            usuarioDAL = new UsuarioDAL();  
         }
 
-        public List<Tarea> ObtenerTareasPorProyecto(int idProyecto)
+        public List<Tarea> ObtenerTareasPorProyecto(int idProyecto, string cedulaSolicitante)
         {
-            return tareaDAL.ObtenerTareasPorProyecto(idProyecto);
+            var tareas = tareaDAL.ObtenerTareasPorProyecto(idProyecto);
+
+            // Obtener el rol del usuario
+            int rol = usuarioDAL.ObtenerRolPorCedula(cedulaSolicitante);
+
+            if (rol == 1) // PROFESOR
+            {
+                return tareas; // todas
+            }
+
+            if (rol == 2) // ESTUDIANTE
+            {
+                return tareas.Where(t => t.CedulaEstudiante == cedulaSolicitante).ToList();
+            }
+
+            return new List<Tarea>();
         }
 
         public void CrearTarea(Tarea tarea, string cedulaUsuario)
@@ -22,10 +39,10 @@ namespace Gestor_de_Proyectos_Académicos.BLL
             if (string.IsNullOrWhiteSpace(tarea.TituloTarea))
                 throw new Exception("El título de la tarea es obligatorio.");
 
-            if (tarea.FechaLimiteTarea == DateTime.MinValue) // 👈 CAMBIADO: Validar fecha mínima
+            if (tarea.FechaLimiteTarea == DateTime.MinValue) //Validar fecha mínima
                 throw new Exception("Debe indicar una fecha límite.");
 
-            if (tarea.IDUsuario <= 0) // 👈 CAMBIADO: Usar IDUsuario en lugar de IdAsignado
+            if (tarea.IDUsuario <= 0) //  Usar IDUsuario en lugar de IdAsignado
                 throw new Exception("Debe indicar un usuario asignado válido.");
 
             if (string.IsNullOrWhiteSpace(cedulaUsuario))
@@ -43,7 +60,12 @@ namespace Gestor_de_Proyectos_Académicos.BLL
         {
             tareaDAL.ModificarTarea(cedulaUsuario, tarea);
         }
+
+        public void ActualizarEstadoTareaEstudiante(int idTarea, string cedulaEstudiante, string nuevoEstado) {
+            tareaDAL.ActualizarEstadoTareaEstudiante(idTarea, cedulaEstudiante, nuevoEstado);
+        }
     }
+
 
    
 }

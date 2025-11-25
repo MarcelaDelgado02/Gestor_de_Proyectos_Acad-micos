@@ -100,7 +100,7 @@ namespace Gestor_de_Proyectos_Académicos.DAL
             }
         }
         // Reporte de estudiantes en proyecto
-        private List<ReporteFiltros> ObtenerReportePersonal(int estudianteId)
+        public List<ReporteFiltros> ObtenerReportePersonal(int estudianteId)
         {
 
             var reportes = new List<ReporteFiltros>();
