@@ -1,0 +1,59 @@
+﻿@page
+@model Gestor_de_Proyectos_Académicos.Pages.Reporte_Proyecto.ProyectoModel
+@{
+}
+ ViewData["Title"] = "Reporte de Proyectos";
+}
+
+<h2>Reporte de Proyectos</h2>
+
+<form method="post" class="mb-3">
+    <div class="row">
+        <div class="col-md-3">
+            <label>Fecha Inicio:</label>
+            <input type="date" asp-for="filtros.FechaInicio" class="form-control" />
+        </div>
+        <div class="col-md-3">
+            <label>Fecha Fin:</label>
+            <input type="date" asp-for="Filtros.FechaFin" class="form-control" />
+        </div>
+        <div class="col-md-3">
+            <button type="submit" class="btn btn-primary mt-4">Filtrar</button>
+        </div>
+    </div>
+</form>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Proyecto</th>
+            <th>Tareas Completadas</th>
+            <th>Total Tareas</th>
+            <th>Porcentaje Avance</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Reporte)
+        {
+            <tr>
+                <td>@item.NombreProyecto</td>
+                <td>@item.TareasCompletadas</td>
+                <td>@item.TotalTareas</td>
+                <td>
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar"
+                             style="width: @item.PorcentajeAvance%;">
+                            @item.PorcentajeAvance%
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <a asp-page="/Reportes/EstudiantesProyecto"
+                       asp-route-id="@item.ProyectoId"
+                       class="btn btn-info btn-sm">Ver Estudiantes</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
