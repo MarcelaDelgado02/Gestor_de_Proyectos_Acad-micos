@@ -72,5 +72,10 @@ namespace Gestor_de_Proyectos_Académicos.BLL
         {
             throw new NotImplementedException();
         }
+
+        internal object GenerarReporteProyectos(ReporteFiltros filtros)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
