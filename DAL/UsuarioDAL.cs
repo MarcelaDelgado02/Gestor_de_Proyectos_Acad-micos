@@ -90,7 +90,7 @@ namespace Gestor_de_Proyectos_Académicos.DAL
                 }
                 catch (SqlException ex)
                 {
-                    // Capturar errores específicos del SQL (se debe cambiar en el futuro)
+                    
                     string errorMensaje = ex.Message;
 
                     if (errorMensaje.Contains("cédula ya existe"))
@@ -184,7 +184,7 @@ namespace Gestor_de_Proyectos_Académicos.DAL
 
                 int rol = (int)respuestaRol.Value;
 
-                // Si el SP devolvió que no es profesor o algún error, lo reportamos.
+               
                 if (rol != 1)
                 {
                     throw new Exception("El usuario que asigna no tiene permisos para asignar estudiantes.");

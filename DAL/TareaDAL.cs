@@ -57,7 +57,7 @@ namespace Gestor_de_Proyectos_Académicos.DAL
 
                 cmd.Parameters.AddWithValue("@CedulaUsuario", cedulaUsuario);
                 cmd.Parameters.AddWithValue("@IdProyecto", tarea.IDProyecto);
-                cmd.Parameters.AddWithValue("@IdAsignado", tarea.IDUsuario); // Usar IDUsuario en lugar de IdAsignado
+                cmd.Parameters.AddWithValue("@IdAsignado", tarea.IDUsuario); // el asignado
                 cmd.Parameters.AddWithValue("@Titulo", tarea.TituloTarea);
                 cmd.Parameters.AddWithValue("@Descripcion", tarea.DescripcionTarea); 
                 cmd.Parameters.AddWithValue("@FechaLimite", tarea.FechaLimiteTarea); 

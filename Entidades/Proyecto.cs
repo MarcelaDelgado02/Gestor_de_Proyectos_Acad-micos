@@ -10,7 +10,7 @@ namespace Gestor_de_Proyectos_Académicos.Entidades
         public DateTime FechaFinalProyecto { get; set; }
         public string EstadoProyecto { get; set; } = string.Empty;
 
-        // Propiedad para el color del estado (solo para la vista)
+        // Propiedad para el color del estado 
         public string ColorEstado { get; set; } = string.Empty;
     }
 }
