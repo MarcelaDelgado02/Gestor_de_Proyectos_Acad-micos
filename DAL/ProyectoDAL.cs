@@ -45,7 +45,7 @@ namespace Gestor_de_Proyectos_Académicos.DAL
             }
             catch (SqlException ex) when (ex.Message.Contains("No hay proyectos en los que participa"))
             {
-                // No hay proyectos, retornamos lista vacía
+                
                 return proyectos;
             }
             catch (Exception ex)
@@ -91,7 +91,7 @@ namespace Gestor_de_Proyectos_Académicos.DAL
                     }
                 }
 
-                // capturamos después del ExecuteReader
+               
                 respuestaRol = (int)rolOutput.Value;
 
                 return idProyectoCreado;

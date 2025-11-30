@@ -12,10 +12,10 @@
 
         
         public int IDUsuario { get; set; }  // FK real en la BD
-        public string CedulaEstudiante { get; set; } = string.Empty;   // viene del join Usuarios
-        public string NombreEstudiante { get; set; } = string.Empty;   // viene del join Usuarios
+        public string CedulaEstudiante { get; set; } = string.Empty;   
+        public string NombreEstudiante { get; set; } = string.Empty;   
 
-        // Usuario creador de la tarea
+        // creador  tarea
         public int IDUsuarioCreador { get; set; }
         public DateTime FechaCreacion { get; set; }
     }

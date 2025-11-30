@@ -39,10 +39,10 @@ namespace Gestor_de_Proyectos_Académicos.BLL
             if (string.IsNullOrWhiteSpace(tarea.TituloTarea))
                 throw new Exception("El título de la tarea es obligatorio.");
 
-            if (tarea.FechaLimiteTarea == DateTime.MinValue) //Validar fecha mínima
+            if (tarea.FechaLimiteTarea == DateTime.MinValue) 
                 throw new Exception("Debe indicar una fecha límite.");
 
-            if (tarea.IDUsuario <= 0) //  Usar IDUsuario en lugar de IdAsignado
+            if (tarea.IDUsuario <= 0) 
                 throw new Exception("Debe indicar un usuario asignado válido.");
 
             if (string.IsNullOrWhiteSpace(cedulaUsuario))
