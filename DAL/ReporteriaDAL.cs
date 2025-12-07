@@ -80,6 +80,39 @@ namespace Gestor_de_Proyectos_Académicos.DAL
             return litaReporteEstudiante;
         }
 
+        public List<Reporte> ObtenerReporteEstudiantesProyecto(int proyectoId) { 
+            var listaEstudiantesProyecto = new List<Reporte>();
+
+            using (var conn = conexion.AbrirConexion())
+            using (var cmd = new SqlCommand("SP_ReporteEstudiantesProyecto", conn)) { 
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@ProyectoId", proyectoId);
+
+                using (var lector = cmd.ExecuteReader()) {
+
+                    while (lector.Read()) {
+
+
+                        listaEstudiantesProyecto.Add(new Reporte
+                        {
+                            EstudianteId = lector.GetInt32(lector.GetOrdinal("EstudianteId")),
+                            NombreEstudiante = lector.GetString(lector.GetOrdinal("NombreEstudiante")),
+                            ProyectoId = proyectoId,
+                            NombreProyecto = lector.GetString(lector.GetOrdinal("NombreProyecto")),
+                            TareasCompletadasEstudiante = lector.GetInt32(lector.GetOrdinal("TareasCompletadas"))
+
+
+
+                        });
+                    }
+                }
+
+            }
+
+            return listaEstudiantesProyecto;
+
+
+        }
 
     }
 }
