@@ -7,11 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Pages\Reportes\**" />
+    <Content Remove="Pages\Reportes\**" />
+    <EmbeddedResource Remove="Pages\Reportes\**" />
+    <None Remove="Pages\Reportes\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.Data.SqlClient" Version="6.1.2" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Pages\Reportes\" />
     <Folder Include="wwwroot\css\InicioCSS\" />
     <Folder Include="wwwroot\css\RegistroCCS\" />
   </ItemGroup>
