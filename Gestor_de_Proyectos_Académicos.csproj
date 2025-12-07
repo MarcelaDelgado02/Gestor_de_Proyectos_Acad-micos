@@ -18,11 +18,10 @@
   </ItemGroup>
 
   <ItemGroup>
-<<<<<<< HEAD
+
     <Folder Include="Pages\Profesor\TareasProfesor\" />
     <Folder Include="Pages\Reportes\" />
-=======
->>>>>>> 4ebe31e4e2cee9951fdcfc8d4b66ec886914cfb6
+
     <Folder Include="wwwroot\css\InicioCSS\" />
     <Folder Include="wwwroot\css\RegistroCCS\" />
   </ItemGroup>

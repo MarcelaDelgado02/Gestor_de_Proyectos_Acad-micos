@@ -4,22 +4,4 @@
     ViewData["Title"] = "Mi Reporte Personal";
 }
 
-<h2>Mi Reporte Personal</h2>
 
-@foreach (var proyecto in Model.Reporte)
-{
-    <div class="card mb-3">
-        <div class="card-header">
-            <h5>@proyecto.NombreProyecto</h5>
-        </div>
-        <div class="card-body">
-            <p><strong>Tareas Personales:</strong> @proyecto.TareasCompletadas de @proyecto.TotalTareas</p>
-            <div class="progress">
-                <div class="progress-bar" role="progressbar"
-                     style="width: @proyecto.PorcentajeAvance%;">
-                    @proyecto.PorcentajeAvance%
-                </div>
-            </div>
-        </div>
-    </div>
-}
