@@ -2,3 +2,35 @@
 @model Gestor_de_Proyectos_Académicos.Pages.ReportePersonal.ReportePersonalModel
 @{
 }
+<h2>👤 Reporte Personal del Estudiante</h2>
+
+<form method="get">
+    <label>ID Estudiante:</label>
+    <input type="number" name="estudianteId" required />
+    <button type="submit">Buscar</button>
+</form>
+
+@if(Model.Any())
+{
+<table class="table table-bordered mt-4">
+    <thead>
+        <tr>
+            <th>Proyecto</th>
+            <th>Tareas Asignadas</th>
+            <th>Completadas</th>
+            <th>Avance</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var r in Model)
+            {
+        <tr>
+            <td>@r.NombreProyecto</td>
+            <td>@r.TotalTareas</td>
+            <td>@r.TareasCompletas</td>
+            <td>@r.PorcentajeAvance %</td>
+        </tr>
+            }
+    </tbody>
+</table>
+}
