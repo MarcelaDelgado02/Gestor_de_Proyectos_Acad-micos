@@ -2,31 +2,30 @@
 @model Gestor_de_Proyectos_Académicos.Pages.ReporteProyectos.ReporteProyectosModel
 @{
 }
-@model List<Gestor_de_Proyectos_Académicos.Entidades.Reporte>
 
-    <h2>📊 Reporte General de Proyectos</h2>
+<h2>📊 Reporte General de Proyectos</h2>
 
-    <form method="get">
-        <label>Fecha Inicio:</label>
-        <input type="date" name="fechaInicio" />
+<form method="get">
+    <label>Fecha Inicio:</label>
+    <input type="date" name="fechaInicio" />
 
-        <label>Fecha Fin:</label>
-        <input type="date" name="fechaFin" />
+    <label>Fecha Fin:</label>
+    <input type="date" name="fechaFin" />
 
-        <button type="submit">Filtrar</button>
-    </form>
+    <button type="submit">Filtrar</button>
+</form>
 
-    <table class="table table-striped mt-4">
-        <thead>
-            <tr>
-                <th>Proyecto</th>
-                <th>Total Tareas</th>
-                <th>Tareas Completas</th>
-                <th>Avance</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach(var p in Model)
+<table class="table table-striped mt-4">
+    <thead>
+        <tr>
+            <th>Proyecto</th>
+            <th>Total Tareas</th>
+            <th>Tareas Completas</th>
+            <th>Avance</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var p in Model.ListaReporte)
         {
             <tr>
                 <td>@p.NombreProyecto</td>
@@ -35,5 +34,5 @@
                 <td>@p.PorcentajeAvance %</td>
             </tr>
         }
-        </tbody>
-    </table>
+    </tbody>
+</table>

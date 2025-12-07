@@ -16,8 +16,8 @@ namespace Gestor_de_Proyectos_Académicos.Pages.Estudiante.inicio
             proyectoBLL = new ProyectoBLL();
         }
 
-       
 
+        public int IdUsuario { get; set; }
         public string CedulaUsuario { get; set; }
         public string NombreUsuario { get; set; }
         public List<Proyecto> Proyectos { get; set; }
@@ -28,7 +28,7 @@ namespace Gestor_de_Proyectos_Académicos.Pages.Estudiante.inicio
         {
             try
             {
-              
+                IdUsuario = HttpContext.Session.GetInt32("IdUsuario") ?? 0;
                 CedulaUsuario = HttpContext.Session.GetString("Cedula");
 
                 if (string.IsNullOrEmpty(CedulaUsuario))

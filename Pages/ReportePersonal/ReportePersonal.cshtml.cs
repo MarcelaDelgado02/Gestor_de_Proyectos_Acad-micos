@@ -1,17 +1,30 @@
+using Gestor_de_Proyectos_Académicos.BLL;
+using Gestor_de_Proyectos_Académicos.Entidades;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Gestor_de_Proyectos_Académicos.BLL;
 
 namespace Gestor_de_Proyectos_Académicos.Pages.ReportePersonal
 {
     public class ReportePersonalModel : PageModel
     {
-        private readonly ReporteriaBLL _bll = new ReporteriaBLL();
+        private readonly ReporteriaBLL reporteriaBLL = new ReporteriaBLL();
 
-        public IActionResult Index(int estudianteId)
+
+
+        public List<Reporte> ReporteEstudiante { get; set; } = new();
+        public int IdEstudiante { get; set; }
+
+        public void OnGet()
         {
-            var resultado = _bll.ObtenerReportePersonal(estudianteId);
-            return View(resultado);
+            IdEstudiante = HttpContext.Session.GetInt32("IdUsuario") ?? 0;
+
+            if (IdEstudiante == 0)
+            {
+                TempData["Error"] = "No hay sesión activa.";
+                return;
+            }
+
+            ReporteEstudiante = reporteriaBLL.ObtenerReportePersonal(IdEstudiante);
         }
     }
 }

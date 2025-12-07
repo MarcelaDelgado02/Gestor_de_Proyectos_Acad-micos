@@ -3,25 +3,23 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Gestor_de_Proyectos_Académicos.BLL;
 using System;
 using System.ComponentModel.Design;
+using Gestor_de_Proyectos_Académicos.Entidades;
 
 namespace Gestor_de_Proyectos_Académicos.Pages.ReporteProyectos
 {
     public class ReporteProyectosModel : PageModel
     {
-       private readonly ReporteriaBll bll = new ReporteriaBll();    
-
-        public IActionResult Index(DateTime? fechaInicio, DateTime? fechafin)
+       private readonly ReporteriaBLL reporteriaBLL = new ReporteriaBLL();    
+        public List<Reporte> ListaReporte {  get; set; }
+        public void OnGet(DateTime? fechaInicio, DateTime? fechaFin)
         {
             var filtros = new Reporte
             {
-                fechaInicio = fechaInicio,
-                fechafin = fechafin
-
+                FechaInicio = fechaInicio,
+                FechaFin = fechaFin
             };
 
-            var lista = _bll.ObtenerReporteProyectos(filtros);
-
-            return ViewTechnology(lista);
+            ListaReporte = reporteriaBLL.ObtenerReporteProyectos(filtros);
         }
 
     }

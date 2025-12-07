@@ -2,35 +2,35 @@
 @model Gestor_de_Proyectos_Académicos.Pages.ReportePersonal.ReportePersonalModel
 @{
 }
-<h2>👤 Reporte Personal del Estudiante</h2>
+<h2>📘 Reporte Personal</h2>
 
-<form method="get">
-    <label>ID Estudiante:</label>
-    <input type="number" name="estudianteId" required />
-    <button type="submit">Buscar</button>
-</form>
-
-@if(Model.Any())
+@if (Model.ReporteEstudiante.Any())
 {
-<table class="table table-bordered mt-4">
-    <thead>
-        <tr>
-            <th>Proyecto</th>
-            <th>Tareas Asignadas</th>
-            <th>Completadas</th>
-            <th>Avance</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach(var r in Model)
+    <table class="table table-bordered mt-4">
+        <thead>
+            <tr>
+                <th>Proyecto</th>
+                <th>Total Tareas</th>
+                <th>Completadas</th>
+                <th>Avance</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var r in Model.ReporteEstudiante)
             {
-        <tr>
-            <td>@r.NombreProyecto</td>
-            <td>@r.TotalTareas</td>
-            <td>@r.TareasCompletas</td>
-            <td>@r.PorcentajeAvance %</td>
-        </tr>
+                <tr>
+                    <td>@r.NombreProyecto</td>
+                    <td>@r.TotalTareas</td>
+                    <td>@r.TareasCompletas</td>
+                    <td>@r.PorcentajeAvance %</td>
+                </tr>
             }
-    </tbody>
-</table>
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="alert alert-info">
+        No se encontraron datos para este estudiante.
+    </div>
 }
