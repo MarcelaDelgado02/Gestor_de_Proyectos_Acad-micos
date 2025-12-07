@@ -7,12 +7,22 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Pages\Reportes\**" />
+    <Content Remove="Pages\Reportes\**" />
+    <EmbeddedResource Remove="Pages\Reportes\**" />
+    <None Remove="Pages\Reportes\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.Data.SqlClient" Version="6.1.2" />
   </ItemGroup>
 
   <ItemGroup>
+<<<<<<< HEAD
     <Folder Include="Pages\Profesor\TareasProfesor\" />
     <Folder Include="Pages\Reportes\" />
+=======
+>>>>>>> 4ebe31e4e2cee9951fdcfc8d4b66ec886914cfb6
     <Folder Include="wwwroot\css\InicioCSS\" />
     <Folder Include="wwwroot\css\RegistroCCS\" />
   </ItemGroup>
