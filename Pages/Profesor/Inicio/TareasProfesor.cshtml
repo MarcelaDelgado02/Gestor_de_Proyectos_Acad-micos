@@ -17,64 +17,75 @@
         <div class="alert alert-danger">@Model.MensajeError</div>
     }
 
-    <!-- Formulario para crear tarea -->
-    <div class="card mb-4">
-        <div class="card-header">
-            <h5>Crear Nueva Tarea</h5>
-        </div>
-        <div class="card-body">
-            <form method="post" asp-page-handler="Crear">
-                <input type="hidden" asp-for="IdProyecto" />
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label">Título</label>
-                            <input asp-for="Titulo" class="form-control" required />
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label">Asignar a</label>
-                            <select asp-for="IdAsignado" class="form-control" required>
-                                <option value="">Seleccionar estudiante</option>
-                                @foreach (var estudiante in Model.Estudiantes)
-                                {
-                                    <option value="@estudiante.IdUsuario">@estudiante.nombreUsuario</option>
-                                }
-                            </select>
-                        </div>
-                    </div>
-                </div>
+    <!-- Botón para abrir/cerrar el formulario -->
+    <button class="btn btn-primary mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#formCrearTarea">
+        + Crear Nueva Tarea
+    </button>
 
-                <div class="mb-3">
-                    <label class="form-label">Descripción</label>
-                    <textarea asp-for="Descripcion" class="form-control" rows="3"></textarea>
-                </div>
+    <!-- Formulario dentro del collapse -->
+    <div class="collapse" id="formCrearTarea">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5>Nueva Tarea</h5>
+            </div>
+            <div class="card-body">
+                <form method="post" asp-page-handler="Crear">
+                    <input type="hidden" asp-for="IdProyecto" />
 
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label">Fecha Límite</label>
-                            <input asp-for="FechaLimite" type="datetime-local" class="form-control" required />
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Título</label>
+                                <input asp-for="Titulo" class="form-control" required />
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Asignar a</label>
+                                <select asp-for="IdAsignado" class="form-control" required>
+                                    <option value="">Seleccionar estudiante</option>
+                                    @foreach (var estudiante in Model.Estudiantes)
+                                    {
+                                        <option value="@estudiante.IdUsuario">@estudiante.nombreUsuario</option>
+                                    }
+                                </select>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label">Estado</label>
-                            <select asp-for="Estado" class="form-control" required>
-                                @foreach (var estado in Model.Estados)
-                                {
-                                    <option value="@estado.Value">@estado.Text</option>
-                                }
-                            </select>
+
+                    <div class="mb-3">
+                        <label class="form-label">Descripción</label>
+                        <textarea asp-for="Descripcion" class="form-control" rows="3"></textarea>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Fecha Límite</label>
+                                <input asp-for="FechaLimite" type="date" class="form-control" required />
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Estado</label>
+                                <select asp-for="Estado" class="form-control" required>
+                                    @foreach (var estado in Model.Estados)
+                                    {
+                                        <option value="@estado.Value">@estado.Text</option>
+                                    }
+                                </select>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <button type="submit" class="btn btn-primary">Crear Tarea</button>
-            </form>
+                    <button type="submit" class="btn btn-success">Guardar Tarea</button>
+                </form>
+            </div>
         </div>
     </div>
+
 
     <!-- Lista de tareas -->
     <div class="card">
@@ -115,16 +126,7 @@
                                 </td>
                                 <td>
                                     <div class="btn-group">
-                                        <form method="post" asp-page-handler="ModificarEstado" class="d-inline">
-                                            <input type="hidden" asp-for="IdProyecto" />
-                                            <input type="hidden" name="idTarea" value="@tarea.IdTarea" />
-                                            @if (tarea.EstadoTarea != "Completada")
-                                            {
-                                                <button type="submit" name="nuevoEstado" value="Completada" class="btn btn-success btn-sm">
-                                                    Completar
-                                                </button>
-                                            }
-                                        </form>
+                                        
                                         <form method="post" asp-page-handler="Eliminar" class="d-inline">
                                             <input type="hidden" asp-for="IdProyecto" />
                                             <input type="hidden" name="idTarea" value="@tarea.IdTarea" />
@@ -135,10 +137,77 @@
                                         </form>
                                     </div>
                                 </td>
+                                <td>
+
+                                    <button class="btn btn-warning btn-sm"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#modalEditar_@tarea.IdTarea">
+                                        Editar
+                                    </button>
+
+                                </td>
                             </tr>
                         }
                     </tbody>
                 </table>
+
+                @foreach (var tarea in Model.Tareas)
+                {
+                    <div class="modal fade" id="modalEditar_@tarea.IdTarea" tabindex="-1">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <form method="post" asp-page-handler="Modificar">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Modificar Tarea</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                    </div>
+
+                                    <div class="modal-body">
+
+                                        <input type="hidden" name="IdProyecto" value="@Model.IdProyecto" />
+                                        <input type="hidden" name="IdTarea" value="@tarea.IdTarea" />
+
+                                        <div class="mb-3">
+                                            <label class="form-label">Título</label>
+                                            <input class="form-control" name="Titulo" value="@tarea.TituloTarea" required />
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label class="form-label">Descripción</label>
+                                            <textarea class="form-control" name="Descripcion">@tarea.DescripcionTarea</textarea>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label class="form-label">Fecha Límite</label>
+                                            <input type="date" class="form-control"
+                                                   name="FechaLimite"
+                                                   value="@tarea.FechaLimiteTarea.ToString("yyyy-MM-dd")" />
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label class="form-label">Estado</label>
+                                            <select class="form-control" name="Estado">
+                                                @foreach (var estado in Model.Estados)
+                                                {
+                                                    <option value="@estado.Value"
+                                                            selected="@(estado.Value == tarea.EstadoTarea)">
+                                                        @estado.Text
+                                                    </option>
+                                                }
+                                            </select>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                }
+
             }
             else
             {

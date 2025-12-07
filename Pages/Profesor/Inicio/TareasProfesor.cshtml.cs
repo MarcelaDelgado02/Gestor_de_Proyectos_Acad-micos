@@ -193,6 +193,39 @@ namespace Gestor_de_Proyectos_Académicos.Pages.Profesor.Inicio
                 return Page();
             }
         }
+        public IActionResult OnPostModificar(int IdTarea, string Titulo, string Descripcion, DateTime FechaLimite, string Estado)
+        {
+            try
+            {
+                string cedulaUsuario = HttpContext.Session.GetString("Cedula") ?? "";
+
+                if (string.IsNullOrEmpty(cedulaUsuario))
+                {
+                    MensajeError = "La sesión expiró. Inicie sesión nuevamente.";
+                    return Page();
+                }
+
+                var tareaModificada = new Tarea
+                {
+                    IdTarea = IdTarea,
+                    TituloTarea = Titulo,
+                    DescripcionTarea = Descripcion,
+                    FechaLimiteTarea = FechaLimite,
+                    EstadoTarea = Estado
+                };
+
+                tareaBLL.ModificarTarea(cedulaUsuario, tareaModificada);
+
+                TempData["Mensaje"] = "Tarea modificada exitosamente";
+
+                return RedirectToPage(new { IdProyecto });
+            }
+            catch (Exception ex)
+            {
+                TempData["MensajeError"] = $"Error al modificar: {ex.Message}";
+                return RedirectToPage(new { IdProyecto });
+            }
+        }
 
 
     }
