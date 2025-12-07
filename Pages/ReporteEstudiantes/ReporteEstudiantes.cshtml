@@ -1,4 +1,34 @@
 ﻿@page
 @model Gestor_de_Proyectos_Académicos.Pages.ReporteEstudiantes.ReportePersonalModel
-@{
+{
+
+    <h2>🧑‍🏫 Estudiantes del Proyecto</h2>
+
+    <form method="get">
+        <label>ID Proyecto:</label>
+        <input type="number" name="proyectoId" required />
+        <button type="submit">Ver</button>
+    </form>
+
+    if(Model.Any())
+{
+    <table class="table table-hover mt-4">
+        <thead>
+            <tr>
+                <th>Estudiante</th>
+                <th>Tareas Completadas</th>
+                <th>Proyecto</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var e in Model)
+        {
+            <tr>
+                <td>@e.NombreEstudiante</td>
+                <td>@e.TareasCompletadasEstudiante</td>
+                <td>@e.NombreProyecto</td>
+            </tr>
+        }
+        </tbody>
+    </table>
 }
