@@ -8,74 +8,44 @@ namespace Gestor_de_Proyectos_Académicos.BLL
 {
     public class ReporteriaBLL
     {
+        private readonly ReporteriaDAL reporteriaDAL = new ReporteriaDAL();
 
-        private readonly ReporteriaDAL reporteriaDAL;
-        private ReporteriaDAL _reporteriaDal;
-
-        public ReporteriaBLL(string connectionString)
-        {
-            _reporteriaDal = new ReporteriaDAL(connectionString);
-        }
-
-        public List<ReporteFiltros> GenerarReporteProyectos(RepoteFiltros filtros)
-        {
-            try
-            {
-                return _reporteriaDal.ObtenerReporteProyectos(filtros);
-            }
-
-            catch (Exception ex)
-            {
-                throw new Exception($"Error al generar reporte de proyectos: { ex.Message}");
-            }
-        }
-            
-        public List<ReporteFiltros> GenerarReporteEstudiantesProyecto(int proyectoId)
-        {
-
-            if (proyectoId < 0)
-                throw new ArgumentOutOfRangeException("El ID de; proyecto es inválido");
+        public List<Reporte> ObtenerReporteProyectos(Reporte filtros) {
 
             try
             {
-
-                return _reporteriaDal.ObtenerReporteEstudiantesProyecto(proyectoId);
+                return reporteriaDAL.ObtenerReporteProyectos(filtros);
             }
-
             catch (Exception ex)
             {
-                throw new Exception($"Error al generar reporte de estudiantes: {ex.Message}");  
-
+                throw new Exception("Error al obtener el reporte general de proyectos.", ex);
             }
-            
-        }
-       
-        public List<ReporteFiltros> GenerarReportePersonal(int estudianteId)
-        {
 
-            if (estudianteId < 0)
-                throw new ArgumentOutOfRangeException("El ID del estudiante en inválido");
+        }
+
+        public List<Reporte> ObtenerReportePersonal(int estudianteId) {
+            try
+            {
+                return reporteriaDAL.ObtenerReportePersonal(estudianteId);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al obtener el reporte personal del estudiante.", ex);
+            }
+
+        }
+
+        public List<Reporte> ObtenerReporteEstudiantesProyecto(int proyectoId) {
 
             try
             {
-                return _reporteriaDal.ObtenerReportePersonal(estudianteId);
-            }
+                return reporteriaDAL.ObtenerReporteEstudiantesProyecto(proyectoId);
 
+            }
             catch (Exception ex)
             {
-                throw new Exception($"Error al generar reporte personal :{ ex.Message}");   
-
+                throw new Exception("Error al obtener el reporte de estudiantes por proyecto.", ex);
             }
-        }
-
-        internal List<Reportes> GenerarReporteEstudiantesProyecto(ReporteFiltros filtros)
-        {
-            throw new NotImplementedException();
-        }
-
-        internal object GenerarReporteProyectos(ReporteFiltros filtros)
-        {
-            throw new NotImplementedException();
         }
     }
 }

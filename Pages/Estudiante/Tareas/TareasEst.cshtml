@@ -16,9 +16,15 @@
     </a>
 </div>
 
-<div class="mt-4 text-center text-danger">
-    @Model.Mensaje
-</div>
+<!-- Mostrar mensajes -->
+@if (!string.IsNullOrEmpty(Model.Mensaje))
+{
+    <div class="alert alert-success mt-3">@Model.Mensaje</div>
+}
+@if (!string.IsNullOrEmpty(Model.MensajeError))
+{
+    <div class="alert alert-danger mt-3">@Model.MensajeError</div>
+}
 
 @if (Model.Tareas != null && Model.Tareas.Count > 0)
 {
@@ -35,42 +41,49 @@
         <tbody>
             @foreach (var t in Model.Tareas)
             {
-                <tr>
-                    <td>@t.TituloTarea</td>
+                bool estaVencida = Model.TareaEstaVencida(t);
+                string filaColor = estaVencida ? "table-danger" : "";
+
+                <tr class="@filaColor">
+                    <td>
+                        @t.TituloTarea
+                        @if (estaVencida)
+                        {
+                            <span class="badge bg-danger ms-2">VENCIDA</span>
+                        }
+                    </td>
                     <td>@t.DescripcionTarea</td>
                     <td>@t.FechaLimiteTarea.ToShortDateString()</td>
-                    <td>@t.EstadoTarea</td>
+                    <td>
+                        <span class="badge bg-@(t.EstadoTarea == "Completada" ? "success" : t.EstadoTarea == "En Progreso" ? "warning" : "secondary")">
+                            @t.EstadoTarea
+                        </span>
+                    </td>
 
                     <td>
                         <form method="post" asp-page-handler="ActualizarEstado">
-                            
                             <input type="hidden" name="idTarea" value="@t.IdTarea" />
                             <input type="hidden" name="IdProyecto" value="@Model.IdProyecto" />
 
-                            <select name="nuevoEstado" class="form-select form-select-sm">
-
-                                <option value="Pendiente"
-                                        selected="@(t.EstadoTarea == "Pendiente")">
-                                    Pendiente
-                                </option>
-
-                                <option value="En Progreso"
-                                        selected="@(t.EstadoTarea == "En Progreso")">
-                                    En Progreso
-                                </option>
-
-                                <option value="Completada"
-                                        selected="@(t.EstadoTarea == "Completada")">
-                                    Completada
-                                </option>
-
+                            <select name="nuevoEstado" class="form-select form-select-sm"
+                            @(estaVencida ? "disabled" : "")>
+                                <option value="Pendiente" selected="@(t.EstadoTarea == "Pendiente")">Pendiente</option>
+                                <option value="En Progreso" selected="@(t.EstadoTarea == "En Progreso")">En Progreso</option>
+                                <option value="Completada" selected="@(t.EstadoTarea == "Completada")">Completada</option>
                             </select>
 
-
-                            <button type="submit" class="btn btn-success btn-sm mt-1">
-                                Actualizar
-                            </button>
-
+                            @if (estaVencida)
+                            {
+                                <button type="button" class="btn btn-secondary btn-sm mt-1" disabled>
+                                    <i class="fas fa-lock"></i> Bloqueada
+                                </button>
+                            }
+                            else
+                            {
+                                <button type="submit" class="btn btn-success btn-sm mt-1">
+                                    <i class="fas fa-save"></i> Actualizar
+                                </button>
+                            }
                         </form>
                     </td>
                 </tr>
@@ -83,14 +96,11 @@ else
     <p class="text-center mt-3">Aún no hay tareas para este proyecto.</p>
 }
 
-
 <!-- Modal Crear Tarea -->
 <div class="modal fade" id="modalCrear" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
-
             <form method="post" asp-page-handler="Crear">
-
                 <div class="modal-header">
                     <h5 class="modal-title">Crear Tarea</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
@@ -101,27 +111,27 @@ else
 
                     <div class="mb-3">
                         <label class="form-label">Título</label>
-                        <input class="form-control" name="Titulo" required />
+                        <input class="form-control" asp-for="Titulo" required />
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">Descripción</label>
-                        <textarea class="form-control" name="Descripcion" required></textarea>
+                        <textarea class="form-control" asp-for="Descripcion" required></textarea>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">Fecha Límite</label>
-                        <input type="date" class="form-control" name="FechaLimite" value="@DateTime.Now.ToString("yyyy-MM-dd")" required />
+                        <input type="date" class="form-control" asp-for="FechaLimite"
+                               min="@DateTime.Now.ToString("yyyy-MM-dd")"
+                               value="@DateTime.Now.AddDays(7).ToString("yyyy-MM-dd")" required />
                     </div>
                 </div>
 
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                     <button type="submit" class="btn btn-primary">Crear</button>
                 </div>
-
             </form>
-
         </div>
     </div>
 </div>
