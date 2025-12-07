@@ -1,6 +1,8 @@
 ﻿using Gestor_de_Proyectos_Académicos.Entidades;
 using Microsoft.Data.SqlClient;
 using System.Data;
+using System.Reflection.PortableExecutable;
+
 
 namespace Gestor_de_Proyectos_Académicos.DAL
 {
@@ -9,143 +11,76 @@ namespace Gestor_de_Proyectos_Académicos.DAL
     public class ReporteriaDAL
     {
 
-        private readonly string _connectionString;
-        private object proyectoId;
+        private ConexionBD conexion = new ConexionBD();
 
-        public ReporteriaDAL(string connectionString)
-        {
-            _connectionString = connectionString;
-        }
+        public List<Reporte> ObtenerReporteProyectos(Reporte filtros) {
+            var listaReporteProyectos = new List<Reporte>();
 
-        public List<ReporteFiltros> ObtenerReporteProyectos(RepoteFiltros filtros)
+            using (var conn = conexion.AbrirConexion())
+            using (var cmd = new SqlCommand("SP_ReporteProyectos", conn)) { 
+            
+                cmd.CommandType = CommandType.StoredProcedure;
 
-        {
-            var reporte = new List<ReporteFiltros>();
+                if (filtros.FechaInicio.HasValue)
+                    cmd.Parameters.AddWithValue("@FechaInicio", filtros.FechaInicio);
 
-            using (var connection = new SqlConnection(_connectionString))
-            {
-                using (var command = new SqlCommand("SP_ReporteProyectos", connection))
-
+                if (filtros.FechaFin.HasValue)
+                    cmd.Parameters.AddWithValue("@FechaFin", filtros.FechaFin);
+                using (var lector = cmd.ExecuteReader())
                 {
-                    command.CommandType = CommandType.StoredProcedure;
 
-                    if (filtros.FechaInicio.HasValue)
-                        command.Parameters.AddWithValue("@FechaInicio", filtros.FechaInicio);
-
-
-                    if (filtros.FechaFin.HasValue)
-                        command.Parameters.AddWithValue("@FechaFin", filtros.FechaFin);
-
-                    connection.Open();
-                    using (var reader = command.ExecuteReader())
+                    while (lector.Read())
                     {
-                        while (reader.Read())
+                        listaReporteProyectos.Add(new Reporte
                         {
-                            reporte.Add(new ReporteFiltros
-                            {
-                                EstudianteId = reader.GetInt32("EstudianteId"),
-                                NombreEstudiate = reader.GetString("NombreEstudiante"),
-                                TotalTareas = reader.GetInt32("TotalTareas"),
-                                TareasCompletadasEstudiante = reader.GetInt32("TareasCompletadas"),
-                                PorcentajeAvance = reader.GetDecimal("PorcentajeAvancePersonal")
-                            });
+                            ProyectoId = lector.GetInt32(lector.GetOrdinal("IdProyecto")),
+                            NombreProyecto = lector.GetString(lector.GetOrdinal("NombreProyecto")),
+                            TotalTareas = lector.GetInt32(lector.GetOrdinal("TotalTareas")),
+                            TareasCompletas = lector.GetInt32(lector.GetOrdinal("TareasCompletadas")),
+                            PorcentajeAvance = lector.GetDecimal(lector.GetOrdinal("PorcentajeAvance")),
+                            
+                            
+                        });
+                    }
+                }
+                
+            }
+            return listaReporteProyectos;
 
 
-                        }
+        }
+        public List<Reporte> ObtenerReportePersonal(int estudianteId) { 
+        
+            var litaReporteEstudiante = new List<Reporte>();
 
+            using (var conn = conexion.AbrirConexion())
+            using (var cmd = new SqlCommand("SP_ReportePersonalEstudiante", conn)) {
+
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@EstudianteId", estudianteId);
+
+                using (var lector = cmd.ExecuteReader()) {
+
+                    while (lector.Read()) {
+
+                        litaReporteEstudiante.Add(new Reporte
+                        {
+                            ProyectoId = lector.GetInt32(lector.GetOrdinal("IdProyecto")),
+                            NombreProyecto = lector.GetString(lector.GetOrdinal("NombreProyecto")),
+                            TotalTareas = lector.GetInt32(lector.GetOrdinal("TotalTareasPersonales")),
+                            TareasCompletas = lector.GetInt32(lector.GetOrdinal("TareasCompletadasPersonales")),
+                            PorcentajeAvance = lector.GetDecimal(lector.GetOrdinal("PorcentajeAvancePersonal"))
+
+
+                        });
                     }
                 }
             }
-            return reporte;
+
+            return litaReporteEstudiante;
         }
 
-        //Reporte de estudiantes en proyecto 
-        public List<ReporteFiltros> ObtenerReporteEstudiantesProyecto(int proyectoId)
-        {
 
-            var reportes = new List<ReporteFiltros>();
-
-            using (var connection = new SqlConnection(_connectionString))
-
-            {
-                using (var command = new SqlCommand("SP_ReporteEstudiantesProyecto", connection))
-
-                {
-
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.AddWithValue("@ProyectoId", proyectoId);
-
-                    connection.Open();
-                    using (var reader = command.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            reportes.Add(new ReporteFiltros
-                            {
-
-                                EstudianteId = reader.GetInt32("EstudianteId"),
-                                NombreEstudiante = reader.GetString("NombreEstudiante"),
-                                TareasCompletadasEstudiante = reader.GetInt32("TareasCompletadas"),
-                                ProyectoId = proyectoId,
-                                NombreProyecto = reader.GetString("NombreProyecto")
-
-                            });
-                        }
-
-                    }
-
-                }
-
-                return reportes;
-            }
-        }
-        // Reporte de estudiantes en proyecto
-        public List<ReporteFiltros> ObtenerReportePersonal(int estudianteId)
-        {
-
-            var reportes = new List<ReporteFiltros>();
-
-
-            using (var connection = new SqlConnection(_connectionString))
-
-            {
-
-                using (var command = new SqlCommand("SP_ReportePersonalEstudiante", connection))
-                {
-
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.AddWithValue("@EstudianteId", estudianteId);
-
-
-                    connection.Open();
-                    using (var reader = command.ExecuteReader())
-                    {
-
-                        while (reader.Read())
-                        {
-                            reportes.Add(new ReporteFiltros
-                            {
-                                ProyectoId = reader.GetInt32("ProyectoId"),
-                                NombreProyecto = reader.GetString("NombreProyecto"),
-                                TotalTareas = reader.GetInt32("TotalTareasPersonales"),
-                                TareasCompletadasEstudiante = reader.GetInt32("TareasCompletadasPersonales"),
-                                PorcentajeAvance = reader.GetDecimal("PorcentajeAvancePersonal")
-
-                            });
-
-                        }
-
-                    }
-                }
-
-                return reportes;
-            }
-        }
-
-        internal List<ReporteFiltros> ObtenerReporteProyectos(ReporteFiltros filtros)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
     

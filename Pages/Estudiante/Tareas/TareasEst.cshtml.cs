@@ -4,17 +4,16 @@ using Gestor_de_Proyectos_Académicos.Entidades;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Collections.Generic;
+
 namespace Gestor_de_Proyectos_Académicos.Pages.Estudiante.Tareas
 {
     public class TareasEstModel : PageModel
     {
         private readonly TareaBLL tareaBLL;
 
-        // Constructor con inyección de dependencias
         public TareasEstModel(TareaBLL tareaBLL)
         {
             this.tareaBLL = tareaBLL;
-            
         }
 
         [BindProperty(SupportsGet = true)]
@@ -52,9 +51,9 @@ namespace Gestor_de_Proyectos_Académicos.Pages.Estudiante.Tareas
                     MensajeError = "Proyecto no válido.";
                     return;
                 }
+
                 string cedula = HttpContext.Session.GetString("Cedula") ?? "";
                 Tareas = tareaBLL.ObtenerTareasPorProyecto(IdProyecto, cedula);
-
 
                 if (!Tareas.Any())
                 {
@@ -91,7 +90,7 @@ namespace Gestor_de_Proyectos_Académicos.Pages.Estudiante.Tareas
                     IDProyecto = IdProyecto,
                     TituloTarea = Titulo,
                     DescripcionTarea = Descripcion,
-                    IDUsuario = idUsuario, // El estudiante se asigna a sí mismo
+                    IDUsuario = idUsuario,
                     FechaLimiteTarea = FechaLimite,
                     EstadoTarea = "Pendiente"
                 };
@@ -118,8 +117,9 @@ namespace Gestor_de_Proyectos_Académicos.Pages.Estudiante.Tareas
         public IActionResult OnPostActualizarEstado(int idTarea, string nuevoEstado)
         {
             string cedulaEstudiante = HttpContext.Session.GetString("Cedula") ?? "";
+            int idUsuario = HttpContext.Session.GetInt32("IdUsuario") ?? 0;
 
-            if (string.IsNullOrEmpty(cedulaEstudiante))
+            if (string.IsNullOrEmpty(cedulaEstudiante) || idUsuario == 0)
             {
                 MensajeError = "La sesión ha expirado. Inicie sesión nuevamente.";
                 return Page();
@@ -127,6 +127,9 @@ namespace Gestor_de_Proyectos_Académicos.Pages.Estudiante.Tareas
 
             try
             {
+               
+               
+
                 tareaBLL.ActualizarEstadoTareaEstudiante(idTarea, cedulaEstudiante, nuevoEstado);
 
                 TempData["Mensaje"] = "Estado de la tarea actualizado correctamente.";
@@ -139,6 +142,10 @@ namespace Gestor_de_Proyectos_Académicos.Pages.Estudiante.Tareas
             }
         }
 
-
+        // Método para verificar si una tarea está vencida (para usar en la vista)
+        public bool TareaEstaVencida(Tarea tarea)
+        {
+            return tarea.EstadoTarea == "Vencida" || tarea.FechaLimiteTarea < DateTime.Now;
+        }
     }
 }

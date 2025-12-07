@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
 
-namespace Gestor_de_Proyectos_Académicos.Pages.Profesor.TareasProfesor
+namespace Gestor_de_Proyectos_Académicos.Pages.Profesor.Inicio
 {
     public class TareasProfesorModel : PageModel
     {
@@ -157,8 +157,8 @@ namespace Gestor_de_Proyectos_Académicos.Pages.Profesor.TareasProfesor
         }
 
 
-            public IActionResult OnPostModificarEstado(int idTarea, string nuevoEstado)
-            {
+        public IActionResult OnPostModificarEstado(int idTarea, string nuevoEstado)
+        {
             try
             {
                 string cedulaUsuario = HttpContext.Session.GetString("Cedula") ?? "";
@@ -170,7 +170,7 @@ namespace Gestor_de_Proyectos_Académicos.Pages.Profesor.TareasProfesor
                 }
 
                 // Buscar la tarea existente
-                
+
 
                 var tareas = tareaBLL.ObtenerTareasPorProyecto(IdProyecto, cedulaUsuario);
 
@@ -192,7 +192,7 @@ namespace Gestor_de_Proyectos_Académicos.Pages.Profesor.TareasProfesor
                 MensajeError = $"Error al modificar el estado: {ex.Message}";
                 return Page();
             }
-             }
+        }
 
 
     }
