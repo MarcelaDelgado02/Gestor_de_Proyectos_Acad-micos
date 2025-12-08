@@ -1,6 +1,5 @@
 using Gestor_de_Proyectos_Académicos.BLL;
 using Gestor_de_Proyectos_Académicos.Entidades;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Gestor_de_Proyectos_Académicos.Pages.ReporteEstudiantes
@@ -11,10 +10,10 @@ namespace Gestor_de_Proyectos_Académicos.Pages.ReporteEstudiantes
 
         public List<Reporte> Estudiantes { get; set; } = new();
 
-        public void OnGet(int? proyectoId)
+        public void OnGet(int proyectoId)
         {
-            if (proyectoId.HasValue)
-                Estudiantes = reporteriaBLL.ObtenerReporteEstudiantesProyecto(proyectoId.Value);
+            // YA NO ES NULLABLE: el botón siempre lo envía
+            Estudiantes = reporteriaBLL.ObtenerReporteEstudiantesProyecto(proyectoId);
         }
     }
 }

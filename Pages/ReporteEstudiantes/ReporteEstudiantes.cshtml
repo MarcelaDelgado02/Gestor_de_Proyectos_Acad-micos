@@ -1,13 +1,7 @@
 ﻿@page
 @model Gestor_de_Proyectos_Académicos.Pages.ReporteEstudiantes.ReportePersonalModel
-{
-<h2>🧑‍🏫 Estudiantes del Proyecto</h2>
 
-<form method="get">
-    <label>ID Proyecto:</label>
-    <input type="number" name="proyectoId" required />
-    <button type="submit">Ver</button>
-</form>
+<h2>🧑‍🏫 Estudiantes del Proyecto</h2>
 
 @if (Model.Estudiantes.Any())
 {
@@ -30,4 +24,8 @@
             }
         </tbody>
     </table>
+}
+else
+{
+    <p class="text-muted mt-3">📭 No hay estudiantes asignados a este proyecto.</p>
 }

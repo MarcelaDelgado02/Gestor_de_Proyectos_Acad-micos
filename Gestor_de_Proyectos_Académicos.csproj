@@ -18,8 +18,6 @@
   </ItemGroup>
 
   <ItemGroup>
-
-    <Folder Include="Pages\Profesor\TareasProfesor\" />
     <Folder Include="Pages\Reportes\" />
 
     <Folder Include="wwwroot\css\InicioCSS\" />

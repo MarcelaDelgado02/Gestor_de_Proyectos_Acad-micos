@@ -13,11 +13,17 @@
     {
         <div class="alert alert-info">@TempData["Mensaje"]</div>
     }
-
     <!-- Botón para mostrar el card de creación -->
     <button class="btn btn-primary mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#cardCrearProyecto" aria-expanded="false" aria-controls="cardCrearProyecto">
         + Crear nuevo proyecto
     </button>
+    <!-- Botón Reporte de Proyectos -->
+    <a href="/ReporteProyectos/ReporteProyectos"
+       class="btn btn-sm btn-secondary">
+        <i class="fa-solid fa-chart-column me-1"></i> Reporte Proyectos
+    </a>
+   
+
 
     <!-- Card colapsable de creación -->
     <div class="collapse" id="cardCrearProyecto">
@@ -129,6 +135,16 @@
                                         </span>
                                     </button>
                                 </form>
+
+                                
+
+                                <!-- Botón Reporte Estudiantes de este proyecto -->
+                                <a href="/ReporteEstudiantes/ReporteEstudiantes?proyectoId=@proyecto.IdProyecto"
+                                   class="btn btn-sm btn-info text-white">
+                                    <i class="fa-solid fa-user-graduate me-1"></i> Estudiantes
+                                </a>
+
+
 
                                 <a href="/Profesor/Inicio/TareasProfesor?IdProyecto=@proyecto.IdProyecto"
                                    class="btn btn-sm btn-primary">

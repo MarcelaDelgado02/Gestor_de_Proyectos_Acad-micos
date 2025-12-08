@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
 
-namespace Gestor_de_Proyectos_Académicos.Pages.Profesor.Inicio
+namespace Gestor_de_Proyectos_Académicos.Pages.Profesor.TareasProfesor
 {
     public class TareasProfesorModel : PageModel
     {

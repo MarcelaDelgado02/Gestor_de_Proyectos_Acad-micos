@@ -28,6 +28,7 @@ namespace Gestor_de_Proyectos_Académicos.Pages.Estudiante.inicio
         {
             try
             {
+
                 IdUsuario = HttpContext.Session.GetInt32("IdUsuario") ?? 0;
                 CedulaUsuario = HttpContext.Session.GetString("Cedula");
 

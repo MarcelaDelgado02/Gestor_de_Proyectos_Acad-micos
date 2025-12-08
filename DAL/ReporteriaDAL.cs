@@ -72,6 +72,7 @@ namespace Gestor_de_Proyectos_Académicos.DAL
                             PorcentajeAvance = lector.GetDecimal(lector.GetOrdinal("PorcentajeAvancePersonal"))
 
 
+
                         });
                     }
                 }

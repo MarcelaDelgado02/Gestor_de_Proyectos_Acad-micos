@@ -6,10 +6,14 @@
 }
 
 <div class="container mt-4">
-    <a href="ReportePersonal/ReportePersonal?IdUsuario=@Model.IdUsuario"
+    
+
+    <a asp-page="/ReportePersonal/ReportePersonal"
+       asp-route-IdUsuario="@Model.IdUsuario"
        class="btn btn-sm btn-warning">
         <i class="fas fa-chart-line me-1"></i> Reporte Personal
     </a>
+
 
    
 
