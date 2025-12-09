@@ -10,18 +10,18 @@ namespace Gestor_de_Proyectos_Académicos.BLL
     {
         private readonly ReporteriaDAL reporteriaDAL = new ReporteriaDAL();
 
-        public List<Reporte> ObtenerReporteProyectos(Reporte filtros) {
-
+        public List<Reporte> ObtenerReporteProyectos(Reporte filtros, int idProfesor)
+        {
             try
             {
-                return reporteriaDAL.ObtenerReporteProyectos(filtros);
+                return reporteriaDAL.ObtenerReporteProyectos(filtros, idProfesor);
             }
             catch (Exception ex)
             {
                 throw new Exception("Error al obtener el reporte general de proyectos.", ex);
             }
-
         }
+
 
         public List<Reporte> ObtenerReportePersonal(int estudianteId) {
             try

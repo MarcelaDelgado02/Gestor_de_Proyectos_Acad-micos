@@ -13,7 +13,7 @@ namespace Gestor_de_Proyectos_Académicos.DAL
 
         private ConexionBD conexion = new ConexionBD();
 
-        public List<Reporte> ObtenerReporteProyectos(Reporte filtros) {
+        public List<Reporte> ObtenerReporteProyectos(Reporte filtros, int idProfesor) {
             var listaReporteProyectos = new List<Reporte>();
 
             using (var conn = conexion.AbrirConexion())
@@ -26,6 +26,8 @@ namespace Gestor_de_Proyectos_Académicos.DAL
 
                 if (filtros.FechaFin.HasValue)
                     cmd.Parameters.AddWithValue("@FechaFin", filtros.FechaFin);
+
+                cmd.Parameters.AddWithValue("@IdProfesor", idProfesor);
                 using (var lector = cmd.ExecuteReader())
                 {
 
