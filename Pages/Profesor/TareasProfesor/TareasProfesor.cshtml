@@ -15,7 +15,7 @@
     @if (Model.Avisos != null && Model.Avisos.Any())
     {
         <div class="alert alert-warning mt-3">
-            <h4 class="alert-heading">🔔 Avisos de tareas próximas a vencer</h4>
+            <h4 class="alert-heading"> Avisos de tareas próximas a vencer</h4>
             <ul class="list-group mt-2">
 
                 @foreach (var aviso in Model.Avisos)
@@ -174,26 +174,22 @@
                                     </span>
                                 </td>
                                 <td>
-                                    <div class="btn-group">
-                                        
-                                        <form method="post" asp-page-handler="Eliminar" class="d-inline">
-                                            <input type="hidden" asp-for="IdProyecto" />
-                                            <input type="hidden" name="idTarea" value="@tarea.IdTarea" />
-                                            <button type="submit" class="btn btn-danger btn-sm"
-                                                    onclick="return confirm('¿Eliminar esta tarea?')">
-                                                Eliminar
-                                            </button>
-                                        </form>
-                                    </div>
-                                </td>
-                                <td>
+                                    <!-- Botón Eliminar -->
+                                    <form method="post" asp-page-handler="Eliminar" class="d-inline-block me-2">
+                                        <input type="hidden" asp-for="IdProyecto" />
+                                        <input type="hidden" name="idTarea" value="@tarea.IdTarea" />
+                                        <button type="submit" class="btn btn-danger btn-sm"
+                                                onclick="return confirm('¿Eliminar esta tarea?')">
+                                            Eliminar
+                                        </button>
+                                    </form>
 
+                                    <!-- Botón Editar -->
                                     <button class="btn btn-warning btn-sm"
                                             data-bs-toggle="modal"
                                             data-bs-target="#modalEditar_@tarea.IdTarea">
                                         Editar
                                     </button>
-
                                 </td>
                             </tr>
                         }

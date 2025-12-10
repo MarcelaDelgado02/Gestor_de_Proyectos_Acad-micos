@@ -37,7 +37,6 @@ h2 {
 }
 
     h2::after {
-        content: '';
         position: absolute;
         bottom: 0;
         left: 50%;
@@ -102,7 +101,6 @@ form[method="get"] {
     }
 
         form[method="get"] label::before {
-            content: '📅';
             font-size: 1.1rem;
         }
 
@@ -150,7 +148,6 @@ form[method="get"] {
         }
 
         form[method="get"] button[type="submit"]::before {
-            content: '🔍';
             font-size: 1.1rem;
         }
 
