@@ -15,14 +15,21 @@
 
 </head>
 <body>
-    <header>
-        @await Component.InvokeAsync("UserInfo")
-        <form asp-area="Identity" asp-page="/Login/Login" method="post">
-            <button type="submit" class="btn ">
-                <i class="fa-solid fa-right-from-bracket" style="color: #0d6efd;"></i>
-                Cerrar sesión
-            </button>
-        </form>
+    <header class="border-bottom p-3">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    @await Component.InvokeAsync("UserInfo")
+                </div>
+                <div>
+                    <form asp-area="Identity" asp-page="/Login/Login" method="post">
+                        <a asp-page="/Logout/Logout" class="btn btn-primary">
+                            <i class="fas fa-sign-out-alt me-1"></i> Cerrar Sesión
+                        </a>
+                    </form>
+                </div>
+            </div>
+        </div>
     </header>
 
     <div class="container">
