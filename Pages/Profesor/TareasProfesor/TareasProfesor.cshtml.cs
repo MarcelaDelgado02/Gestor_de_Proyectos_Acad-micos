@@ -21,6 +21,7 @@ namespace Gestor_de_Proyectos_Académicos.Pages.Profesor.TareasProfesor
 
         [BindProperty(SupportsGet = true)]
         public int IdProyecto { get; set; }
+        
 
         [BindProperty]
         public string Titulo { get; set; } = string.Empty;

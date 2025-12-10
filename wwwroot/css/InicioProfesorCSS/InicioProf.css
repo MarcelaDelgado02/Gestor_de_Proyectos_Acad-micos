@@ -1,0 +1,84 @@
+﻿
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap');
+
+body {
+    font-family: 'Nunito', sans-serif;
+}
+
+/* Estilos para igualar completamente ambos botones */
+.btn.btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem;
+    transition: all 0.2s ease;
+}
+
+/* Asegurar que el enlace se comporte como botón */
+a.btn.btn-primary {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Estilos hover para consistencia */
+.btn.btn-primary:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+/* Para alineación vertical perfecta de iconos */
+.btn.btn-primary i {
+    line-height: 1;
+    font-size: 0.9em;
+}
+
+.btn.btn-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    border-radius: 0.25rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+    font-weight: 500;
+}
+
+/* Asegurar que los botones en formularios tengan el mismo estilo */
+form.m-0 {
+    margin: 0;
+}
+
+/* Estilos hover para botones outline */
+.btn-outline-primary:hover,
+.btn-outline-danger:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Asegurar que los enlaces se comporten como botones */
+a.btn {
+    text-decoration: none;
+}
+
+/* Alineación vertical perfecta de iconos */
+.btn i {
+    line-height: 1;
+    font-size: 0.8em;
+}
+
+/* Color del botón de estudiantes */
+.btn-info {
+    background-color: #17a2b8;
+    border-color: #17a2b8;
+    color: white;
+}
+
+    .btn-info:hover {
+        background-color: #138496;
+        border-color: #117a8b;
+        color: white;
+    }
