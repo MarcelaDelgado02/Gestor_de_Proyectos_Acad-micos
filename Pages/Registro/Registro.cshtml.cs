@@ -7,7 +7,7 @@ namespace Gestor_de_Proyectos_Académicos.Pages.Registro
 {
     public class RegistroModel : PageModel
     {
-        private readonly UsuarioBLL usuarioBLL; // 
+        private readonly UsuarioBLL usuarioBLL;  
 
         public RegistroModel()
         {
@@ -39,24 +39,22 @@ namespace Gestor_de_Proyectos_Académicos.Pages.Registro
 
                 if (exito)
                 {
-                    // Limpiar el formulario
                     NuevoUsuario = new Usuario();
                     ModelState.Clear();
 
-                    // Redirigir al login con mensaje de éxito
                     TempData["RegistroExitoso"] = " Usuario registrado correctamente. Ahora puede iniciar sesión.";
                     return RedirectToPage("/Login/Login");
                 }
                 else
                 {
                     Error = mensaje;
-                    return Page(); //  Mostrar error en la misma página
+                    return Page(); 
                 }
             }
             catch (Exception ex)
             {
                 Error = $" Error al registrar: {ex.Message}";
-                return Page(); //  Mostrar error en la misma página
+                return Page(); 
             }
         }
     }

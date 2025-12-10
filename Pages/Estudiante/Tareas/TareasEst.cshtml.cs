@@ -100,7 +100,7 @@ namespace Gestor_de_Proyectos_Académicos.Pages.Estudiante.Tareas
                 Mensaje = "Tarea creada exitosamente";
                 TempData["Mensaje"] = Mensaje;
 
-                // Limpiar el formulario
+              
                 Titulo = string.Empty;
                 Descripcion = string.Empty;
                 FechaLimite = DateTime.Now.AddDays(7);
@@ -142,7 +142,7 @@ namespace Gestor_de_Proyectos_Académicos.Pages.Estudiante.Tareas
             }
         }
 
-        // Método para verificar si una tarea está vencida (para usar en la vista)
+      
         public bool TareaEstaVencida(Tarea tarea)
         {
             return tarea.EstadoTarea == "Vencida" || tarea.FechaLimiteTarea < DateTime.Now;

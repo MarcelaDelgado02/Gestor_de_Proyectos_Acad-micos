@@ -70,7 +70,6 @@ namespace Gestor_de_Proyectos_Académicos.Pages.Profesor.Inicio
 
             try
             {
-                // 1. Crear proyecto y obtener el ID
                 int idProyectoCreado = proyectoBLL.CrearProyecto(CedulaUsuario, NuevoProyecto);
 
                 if (idProyectoCreado <= 0)
@@ -79,7 +78,7 @@ namespace Gestor_de_Proyectos_Académicos.Pages.Profesor.Inicio
                     return RedirectToPage();
                 }
 
-                // 2. Asignar estudiantes si hay seleccionados
+               
                 if (EstudiantesSeleccionados != null && EstudiantesSeleccionados.Any())
                 {
                     usuarioBLL.AsignarEstudiantesAProyecto(idProyectoCreado, EstudiantesSeleccionados, CedulaUsuario);

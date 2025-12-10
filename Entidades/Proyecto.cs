@@ -1,4 +1,4 @@
-﻿// Entidades/Proyecto.cs
+﻿
 namespace Gestor_de_Proyectos_Académicos.Entidades
 {
     public class Proyecto

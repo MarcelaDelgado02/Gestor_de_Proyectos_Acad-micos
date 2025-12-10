@@ -73,14 +73,14 @@ namespace Gestor_de_Proyectos_Académicos.DAL
                 cmd.Parameters.AddWithValue("@FechaFinalProyecto", nuevoProyecto.FechaFinalProyecto);
                 cmd.Parameters.AddWithValue("@EstadoProyecto", nuevoProyecto.EstadoProyecto ?? "Activo");
 
-                // OUTPUT del rol
+               
                 var rolOutput = new SqlParameter("@RespuestaRolP", SqlDbType.Int)
                 {
                     Direction = ParameterDirection.Output
                 };
                 cmd.Parameters.Add(rolOutput);
 
-                // Ejecutamos y leemos el Id del proyecto creado
+               
                 int idProyectoCreado = 0;
 
                 using (var reader = cmd.ExecuteReader())

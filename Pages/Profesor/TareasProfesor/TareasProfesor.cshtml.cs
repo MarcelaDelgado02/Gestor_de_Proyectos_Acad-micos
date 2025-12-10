@@ -116,7 +116,6 @@ namespace Gestor_de_Proyectos_Académicos.Pages.Profesor.TareasProfesor
                 Mensaje = "Tarea creada exitosamente";
                 TempData["Mensaje"] = Mensaje;
 
-                // Limpiar el formulario
                 Titulo = string.Empty;
                 Descripcion = string.Empty;
                 IdAsignado = 0;
@@ -173,7 +172,7 @@ namespace Gestor_de_Proyectos_Académicos.Pages.Profesor.TareasProfesor
                     return Page();
                 }
 
-                // Buscar la tarea existente
+                
 
 
                 var tareas = tareaBLL.ObtenerTareasPorProyecto(IdProyecto, cedulaUsuario);

@@ -12,7 +12,6 @@ namespace Gestor_de_Proyectos_Académicos.Pages.ReporteEstudiantes
 
         public void OnGet(int proyectoId)
         {
-            // YA NO ES NULLABLE: el botón siempre lo envía
             Estudiantes = reporteriaBLL.ObtenerReporteEstudiantesProyecto(proyectoId);
         }
     }

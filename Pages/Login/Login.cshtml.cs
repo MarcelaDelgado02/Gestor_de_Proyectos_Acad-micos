@@ -14,7 +14,7 @@ namespace Gestor_de_Proyectos_Académicos.Pages.Login
             usuarioBLL = new UsuarioBLL();
         }
 
-        //  PROPIEDADES ENLAZADAS 
+        
         [BindProperty]
         public string CorreoUsuario { get; set; } = string.Empty;
 
@@ -58,7 +58,7 @@ namespace Gestor_de_Proyectos_Académicos.Pages.Login
                 }
                 else
                 {
-                    // CREDENCIALES INCORRECTAS
+                    
                     Mensaje = "Correo o contraseña incorrectos.";
                     return Page();
                 }

@@ -20,15 +20,15 @@ namespace Gestor_de_Proyectos_Académicos.BLL
         {
             var tareas = tareaDAL.ObtenerTareasPorProyecto(idProyecto);
 
-            // Obtener el rol del usuario
+            
             int rol = usuarioDAL.ObtenerRolPorCedula(cedulaSolicitante);
 
-            if (rol == 1) // PROFESOR
+            if (rol == 1) 
             {
-                return tareas; // todas
+                return tareas; 
             }
 
-            if (rol == 2) // ESTUDIANTE
+            if (rol == 2) 
             {
                 return tareas.Where(t => t.CedulaEstudiante == cedulaSolicitante).ToList();
             }
@@ -74,26 +74,26 @@ namespace Gestor_de_Proyectos_Académicos.BLL
             var tareas = tareaDAL.ObtenerTareasPorProyecto(proyectoId);
             DateTime hoy = DateTime.Now.Date;
 
-            // Obtener el rol del usuario
+          
             int rol = usuarioDAL.ObtenerRolPorCedula(cedula);
 
-            if (rol == 1) // PROFESOR - ver todas las tareas del proyecto
+            if (rol == 1) 
             {
                 return tareas
                     .Where(t =>
-                        t.EstadoTarea != "Completada" &&           // excluir tareas completadas
+                        t.EstadoTarea != "Completada" &&          
                         t.FechaLimiteTarea.Date >= hoy &&
                         (t.FechaLimiteTarea.Date - hoy).TotalDays <= diasAviso
                     )
                     .OrderBy(t => t.FechaLimiteTarea)
                     .ToList();
             }
-            else // ESTUDIANTE - ver solo sus tareas
+            else 
             {
                 return tareas
                     .Where(t =>
-                        t.CedulaEstudiante == cedula &&            // por estudiante
-                        t.EstadoTarea != "Completada" &&           // excluir tareas completadas
+                        t.CedulaEstudiante == cedula &&          
+                        t.EstadoTarea != "Completada" &&           
                         t.FechaLimiteTarea.Date >= hoy &&
                         (t.FechaLimiteTarea.Date - hoy).TotalDays <= diasAviso
                     )

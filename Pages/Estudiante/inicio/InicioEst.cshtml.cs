@@ -39,16 +39,16 @@ namespace Gestor_de_Proyectos_Académicos.Pages.Estudiante.inicio
                     return;
                 }
 
-                // 1. TODOS LOS PROYECTOS
+               
                 Proyectos = proyectoBLL.ObtenerProyectos(CedulaUsuario);
 
-                // 2. SOLO LOS QUE SON AVISO (<= 5 días)
+                
                 ProyectosAviso = proyectoBLL.ObtenerProyectosValidos(CedulaUsuario, 5);
 
 
                 if (Proyectos.Any())
                 {
-                    Mensaje = "no esta tiene tareas encargadas"; // solo es un mensaje mal redactado
+                    Mensaje = "no esta tiene tareas encargadas"; 
                 }
             }
             catch (Exception ex)

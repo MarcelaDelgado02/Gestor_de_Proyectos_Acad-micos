@@ -11,7 +11,7 @@ namespace Gestor_de_Proyectos_Académicos.BLL
     {
         private UsuarioDAL usuarioDAL = new UsuarioDAL();
 
-        // metodo de iniciar secion
+       
         public Usuario? IniciarSesion(string correo, string contrasena)
         {
             if (string.IsNullOrWhiteSpace(correo) || string.IsNullOrWhiteSpace(contrasena))
@@ -26,7 +26,7 @@ namespace Gestor_de_Proyectos_Académicos.BLL
        
         public (bool exito, string mensaje) RegistrarUsuario(Usuario nuevoUsuario)
         {
-            // Validar campos obligatorios
+           
             if (string.IsNullOrWhiteSpace(nuevoUsuario.cedulaUsuario) ||
                 string.IsNullOrWhiteSpace(nuevoUsuario.nombreUsuario) ||
                 string.IsNullOrWhiteSpace(nuevoUsuario.correoUsuario) ||
@@ -36,13 +36,13 @@ namespace Gestor_de_Proyectos_Académicos.BLL
                 return (false, "Todos los campos son obligatorios");
             }
 
-            // Validar roles
+           
             if (nuevoUsuario.rolUsuario != 1 && nuevoUsuario.rolUsuario != 2)
             {
                 return (false, "Rol debe ser 1 (Profesor) o 2 (Estudiante)");
             }
 
-            // Validar formato de email
+            
             if (!IsValidEmail(nuevoUsuario.correoUsuario))
             {
                 return (false, "El formato del correo electrónico no es válido");
@@ -73,7 +73,7 @@ namespace Gestor_de_Proyectos_Académicos.BLL
             return usuarioDAL.ExisteCorreo(correo);
         }
 
-        //  MÉTODO DE VALIDACIÓN DE EMAIL
+       
         private bool IsValidEmail(string email)
         {
             try
