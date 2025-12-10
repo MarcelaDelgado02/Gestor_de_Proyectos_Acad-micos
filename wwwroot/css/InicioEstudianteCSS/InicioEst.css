@@ -1,6 +1,251 @@
-﻿/* Importar fuente desde Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap');
+﻿@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&display=swap');
 
+/* Estilos generales */
 body {
+    font-family: 'Nunito', sans-serif !important;
+   
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    padding: 20px;
+}
+
+/* Header y títulos */
+.card-header.bg-primary {
+    background: linear-gradient(135deg, #297EA6 0%, #1a5c7a 100%) !important;
+    border-bottom: none;
+    padding: 15px 20px;
+}
+
+.card-header h5 {
+    font-weight: 700;
+    margin: 0;
+}
+
+/* Cards */
+.card {
+    border: none;
+    border-radius: 15px;
+    background-color: rgba(255, 255, 255, 0.9) !important;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
+    margin-bottom: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 40px rgba(31, 38, 135, 0.15);
+    }
+
+.card-body {
+    padding: 25px;
+}
+
+/* Alertas */
+.alert {
+    border: none;
+    border-radius: 10px;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.alert-warning {
+    background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+    border-left: 4px solid #ffc107;
+    color: #856404;
+}
+
+.alert-info {
+    background: linear-gradient(135deg, #d1ecf1 0%, #b8e6f1 100%);
+    border-left: 4px solid #17a2b8;
+    color: #0c5460;
+}
+
+.alert h5 {
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.alert ul {
+    padding-left: 20px;
+    margin-bottom: 0;
+}
+
+.alert li {
+    margin-bottom: 8px;
+}
+
+/* Botones */
+.btn {
     font-family: 'Nunito', sans-serif;
+    font-weight: 600;
+    padding: 8px 20px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.btn-warning {
+    background: linear-gradient(135deg, #ffc107 0%, #e0a800 100%);
+    color: #212529;
+    border: none;
+    box-shadow: 0 4px 15px rgba(255, 193, 7, 0.2);
+}
+
+    .btn-warning:hover {
+        background: linear-gradient(135deg, #e0a800 0%, #d39e00 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(255, 193, 7, 0.3);
+    }
+
+.btn-primary {
+    background: linear-gradient(135deg, #297EA6 0%, #1a5c7a 100%);
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    padding: 8px 16px;
+    box-shadow: 0 4px 15px rgba(41, 126, 166, 0.2);
+}
+
+    .btn-primary:hover {
+        background: linear-gradient(135deg, #1a5c7a 0%, #0d3c52 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(41, 126, 166, 0.3);
+    }
+
+.btn-outline-info {
+    background: transparent;
+    color: #17a2b8;
+    border: 2px solid #17a2b8;
+    font-weight: 600;
+}
+
+    .btn-outline-info:hover {
+        background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
+        color: white;
+        transform: translateY(-2px);
+    }
+
+.btn-sm {
+    padding: 5px 12px;
+    font-size: 0.875rem;
+}
+
+/* Tabla */
+.table-responsive {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.table {
+    margin-bottom: 0;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+    .table thead th {
+        background: linear-gradient(135deg, #343a40 0%, #23272b 100%);
+        color: white;
+        font-weight: 700;
+        padding: 15px;
+        border: none;
+    }
+
+    .table tbody tr {
+        transition: all 0.3s ease;
+    }
+
+        .table tbody tr:hover {
+            background-color: rgba(41, 126, 166, 0.05);
+            transform: scale(1.002);
+        }
+
+    .table tbody td {
+        padding: 15px;
+        vertical-align: middle;
+        border-bottom: 1px solid #e9ecef;
+    }
+
+/* Badges para estados */
+.badge {
+    color: black!important;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+/* Card para descripción desplegable */
+.card.card-body {
+    background-color: rgba(248, 249, 250, 0.8);
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    margin-top: 5px;
+    font-size: 0.9rem;
+    color: #495057;
+}
+
+/* Estado sin proyectos */
+.text-center.py-4 {
+    padding: 40px 20px;
+}
+
+    .text-center.py-4 i {
+        color: #6c757d;
+        opacity: 0.5;
+        margin-bottom: 15px;
+    }
+
+    .text-center.py-4 h5 {
+        color: #6c757d;
+        font-weight: 600;
+        margin-bottom: 10px;
+    }
+
+    .text-center.py-4 p {
+        color: #6c757d;
+        opacity: 0.8;
+    }
+
+/* Animación sutil para el contenedor */
+.container.mt-4 {
+    animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .card-body {
+        padding: 15px;
+    }
+
+    .table-responsive {
+        font-size: 0.9rem;
+    }
+
+    .btn {
+        width: 100%;
+        margin-bottom: 5px;
+    }
+
+    .alert {
+        padding: 12px 15px;
+    }
 }

@@ -3,7 +3,13 @@
 @{
     ViewData["Title"] = "Gestión de Tareas - Profesor";
 }
+<head>
+    <link href="~/css/TareasProfCSS/TareaProfesor.css" rel="stylesheet" asp-append-version="true" />
 
+
+
+
+</head>
 <div class="container">
     <h2>Gestión de Tareas  </h2>
     @if (Model.Avisos != null && Model.Avisos.Any())
@@ -46,11 +52,25 @@
         <div class="alert alert-danger">@Model.MensajeError</div>
     }
 
-    <!-- Botón para abrir/cerrar el formulario -->
-    <button class="btn btn-primary mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#formCrearTarea">
-        + Crear Nueva Tarea
-    </button>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        
+        <div>
+            <a class="btn btn-secondary" asp-page="/Profesor/Inicio/inicioProf">
+                Volver
+            </a>
+        </div>
 
+        
+        <div>
+            <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#formCrearTarea">
+                + Crear Nueva Tarea
+            </button>
+        </div>
+    </div>
+  
+
+   
+    
    
     <div class="collapse" id="formCrearTarea">
         <div class="card mb-4">

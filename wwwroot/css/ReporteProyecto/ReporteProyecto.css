@@ -1,0 +1,450 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&display=swap');
+
+/* Estilos generales */
+body {
+    font-family: 'Nunito', sans-serif !important;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    padding: 20px;
+    animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Encabezado */
+h2 {
+    color: #297EA6;
+    font-weight: 700;
+    margin-bottom: 30px;
+    text-align: center;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    position: relative;
+    padding-bottom: 15px;
+}
+
+    h2::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 150px;
+        height: 3px;
+        background: linear-gradient(90deg, #297EA6, #1a5c7a);
+        border-radius: 2px;
+    }
+
+/* Botón Volver */
+.text-lg-start.mt-3 {
+    margin-bottom: 30px;
+}
+
+.btn-secondary {
+    background: linear-gradient(135deg, #6c757d 0%, #545b62 100%);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 12px 25px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 600;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    box-shadow: 0 4px 15px rgba(108, 117, 125, 0.2);
+}
+
+    .btn-secondary:hover {
+        background: linear-gradient(135deg, #545b62 0%, #3d4348 100%);
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(108, 117, 125, 0.3);
+        color: white;
+    }
+
+/* Formulario de filtro */
+form[method="get"] {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 16px;
+    padding: 25px 30px;
+    margin-bottom: 30px;
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
+    border: 1px solid rgba(41, 126, 166, 0.15);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 20px;
+    backdrop-filter: blur(10px);
+}
+
+    form[method="get"] label {
+        font-weight: 600;
+        color: #495057;
+        margin-bottom: 0;
+        font-size: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+        form[method="get"] label::before {
+            content: '📅';
+            font-size: 1.1rem;
+        }
+
+    form[method="get"] input[type="date"] {
+        border: 2px solid #e9ecef;
+        border-radius: 12px;
+        padding: 12px 18px;
+        font-family: 'Nunito', sans-serif;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        background: rgba(255, 255, 255, 0.95);
+        min-width: 200px;
+        box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+    }
+
+        form[method="get"] input[type="date"]:focus {
+            border-color: #297EA6;
+            box-shadow: 0 0 0 0.25rem rgba(41, 126, 166, 0.25);
+            background: white;
+            outline: none;
+        }
+
+    form[method="get"] button[type="submit"] {
+        background: linear-gradient(135deg, #297EA6 0%, #1a5c7a 100%);
+        color: white;
+        border: none;
+        border-radius: 12px;
+        padding: 12px 25px;
+        font-family: 'Nunito', sans-serif;
+        font-weight: 600;
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        box-shadow: 0 4px 15px rgba(41, 126, 166, 0.25);
+        min-width: 140px;
+    }
+
+        form[method="get"] button[type="submit"]:hover {
+            background: linear-gradient(135deg, #1a5c7a 0%, #0d3c52 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(41, 126, 166, 0.35);
+        }
+
+        form[method="get"] button[type="submit"]::before {
+            content: '🔍';
+            font-size: 1.1rem;
+        }
+
+/* Tabla de reportes */
+.table {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(31, 38, 135, 0.15);
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 30px;
+    border: 1px solid rgba(0,0,0,0.05);
+}
+
+    .table thead th {
+        background: linear-gradient(135deg, #297EA6 0%, #1a5c7a 100%);
+        color: white;
+        font-weight: 700;
+        padding: 20px 15px;
+        border: none;
+        text-align: center;
+        font-size: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        position: relative;
+    }
+
+        .table thead th::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 10%;
+            width: 80%;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+    .table tbody tr {
+        transition: all 0.3s ease;
+        border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+
+        .table tbody tr:hover {
+            background-color: rgba(41, 126, 166, 0.05);
+            transform: scale(1.002);
+        }
+
+    .table tbody td {
+        padding: 20px 15px;
+        vertical-align: middle;
+        text-align: center;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        font-size: 1rem;
+        color: #495057;
+    }
+
+    .table tbody tr:last-child td {
+        border-bottom: none;
+    }
+
+    /* Estilos específicos para columnas */
+    .table tbody td:nth-child(1) {
+        font-weight: 600;
+        color: #297EA6;
+        text-align: left;
+        padding-left: 25px;
+    }
+
+    .table tbody td:nth-child(2),
+    .table tbody td:nth-child(3) {
+        font-weight: 700;
+        color: #495057;
+        font-size: 1.1rem;
+    }
+
+    .table tbody td:nth-child(4) {
+        font-weight: 800;
+        position: relative;
+    }
+
+        /* Barras de progreso visual para el porcentaje */
+        .table tbody td:nth-child(4)::after {
+            content: '';
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 6px;
+            background: #e9ecef;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .table tbody td:nth-child(4)::before {
+            content: '';
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(var(--progress) * 0.8); /* Se usará desde el HTML */
+            height: 6px;
+            background: linear-gradient(90deg, #28a745, #20c997);
+            border-radius: 3px;
+            z-index: 1;
+        }
+
+    /* Colores para diferentes niveles de progreso */
+    .table tbody tr td:nth-child(4)[data-progress="high"]::before {
+        background: linear-gradient(90deg, #28a745, #20c997);
+    }
+
+    .table tbody tr td:nth-child(4)[data-progress="medium"]::before {
+        background: linear-gradient(90deg, #ffc107, #fd7e14);
+    }
+
+    .table tbody tr td:nth-child(4)[data-progress="low"]::before {
+        background: linear-gradient(90deg, #dc3545, #e83e8c);
+    }
+
+    /* Ajuste para mostrar el texto del porcentaje sobre la barra */
+    .table tbody td:nth-child(4) span {
+        position: relative;
+        z-index: 2;
+        background: rgba(255, 255, 255, 0.9);
+        padding: 2px 10px;
+        border-radius: 10px;
+        font-weight: 700;
+    }
+
+    /* Estilos para mensajes cuando no hay datos */
+    .table tbody:empty::after {
+        content: 'No hay datos para mostrar';
+        display: block;
+        text-align: center;
+        padding: 40px;
+        color: #6c757d;
+        font-style: italic;
+        font-size: 1.1rem;
+    }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+        padding-bottom: 12px;
+    }
+
+        h2::after {
+            width: 120px;
+        }
+
+    form[method="get"] {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 20px;
+        gap: 15px;
+    }
+
+        form[method="get"] label,
+        form[method="get"] input[type="date"],
+        form[method="get"] button[type="submit"] {
+            width: 100%;
+            min-width: auto;
+        }
+
+        form[method="get"] label {
+            margin-bottom: 5px;
+        }
+
+    .table {
+        font-size: 0.9rem;
+    }
+
+        .table thead {
+            display: none;
+        }
+
+        .table, .table tbody, .table tr, .table td {
+            display: block;
+            width: 100%;
+        }
+
+            .table tr {
+                margin-bottom: 20px;
+                border-radius: 12px;
+                overflow: hidden;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+                background: rgba(255, 255, 255, 0.95);
+                padding: 15px;
+                position: relative;
+            }
+
+            .table td {
+                text-align: right;
+                padding: 12px 15px;
+                position: relative;
+                border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            }
+
+                .table td::before {
+                    content: attr(data-label);
+                    position: absolute;
+                    left: 15px;
+                    font-weight: 700;
+                    color: #297EA6;
+                    text-align: left;
+                }
+
+            .table tbody td:nth-child(4)::after,
+            .table tbody td:nth-child(4)::before {
+                display: none; /* Ocultar barras en móvil */
+            }
+}
+
+@media (max-width: 576px) {
+    .btn-secondary {
+        width: 100%;
+        justify-content: center;
+        padding: 10px 20px;
+    }
+
+    form[method="get"] {
+        padding: 15px;
+    }
+
+        form[method="get"] input[type="date"] {
+            padding: 10px 15px;
+        }
+
+    .table td {
+        padding: 10px 15px;
+    }
+}
+
+/* Animación para la tabla */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.table tbody tr {
+    animation: slideIn 0.5s ease-out;
+    animation-fill-mode: both;
+}
+
+    .table tbody tr:nth-child(1) {
+        animation-delay: 0.1s;
+    }
+
+    .table tbody tr:nth-child(2) {
+        animation-delay: 0.2s;
+    }
+
+    .table tbody tr:nth-child(3) {
+        animation-delay: 0.3s;
+    }
+
+    .table tbody tr:nth-child(4) {
+        animation-delay: 0.4s;
+    }
+
+    .table tbody tr:nth-child(5) {
+        animation-delay: 0.5s;
+    }
+
+    .table tbody tr:nth-child(6) {
+        animation-delay: 0.6s;
+    }
+
+    .table tbody tr:nth-child(7) {
+        animation-delay: 0.7s;
+    }
+
+    .table tbody tr:nth-child(8) {
+        animation-delay: 0.8s;
+    }
+
+    .table tbody tr:nth-child(9) {
+        animation-delay: 0.9s;
+    }
+
+    .table tbody tr:nth-child(10) {
+        animation-delay: 1.0s;
+    }

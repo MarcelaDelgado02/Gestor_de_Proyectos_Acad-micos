@@ -1,0 +1,367 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&display=swap');
+
+/* Estilos generales */
+body {
+    font-family: 'Nunito', sans-serif !important;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    padding: 20px;
+    animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Encabezado */
+h2 {
+    color: #297EA6;
+    font-weight: 700;
+    margin-bottom: 30px;
+    text-align: center;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    position: relative;
+    padding-bottom: 15px;
+}
+
+    h2::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 150px;
+        height: 3px;
+        background: linear-gradient(90deg, #297EA6, #1a5c7a);
+        border-radius: 2px;
+    }
+
+/* Botón Volver */
+.text-lg-start.mt-3 {
+    margin-bottom: 30px;
+}
+
+.btn-secondary {
+    background: linear-gradient(135deg, #6c757d 0%, #545b62 100%);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 12px 25px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 600;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    box-shadow: 0 4px 15px rgba(108, 117, 125, 0.2);
+}
+
+    .btn-secondary:hover {
+        background: linear-gradient(135deg, #545b62 0%, #3d4348 100%);
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(108, 117, 125, 0.3);
+        color: white;
+    }
+
+/* Tabla de reporte personal */
+.table {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(31, 38, 135, 0.15);
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 30px;
+    border: 1px solid rgba(0,0,0,0.05);
+}
+
+    .table thead th {
+        background: linear-gradient(135deg, #297EA6 0%, #1a5c7a 100%);
+        color: white;
+        font-weight: 700;
+        padding: 20px 15px;
+        border: none;
+        text-align: center;
+        font-size: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        position: relative;
+    }
+
+        .table thead th::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 10%;
+            width: 80%;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+.table-bordered tbody tr {
+    transition: all 0.3s ease;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+    .table-bordered tbody tr:hover {
+        background-color: rgba(41, 126, 166, 0.05);
+        transform: scale(1.002);
+        box-shadow: inset 0 0 0 1px rgba(41, 126, 166, 0.1);
+    }
+
+.table tbody td {
+    padding: 20px 15px;
+    vertical-align: middle;
+    text-align: center;
+    font-size: 1rem;
+    color: #495057;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Estilos específicos para columnas - SIMPLIFICADO SIN BARRAS */
+.table tbody td:nth-child(1) {
+    font-weight: 600;
+    color: #297EA6;
+    text-align: left;
+    padding-left: 25px;
+    position: relative;
+}
+
+    /* Icono de proyecto (opcional, puedes mantenerlo) */
+    .table tbody td:nth-child(1)::before {
+        position: absolute;
+        left: 5px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 1.1rem;
+        opacity: 0.7;
+    }
+
+.table tbody td:nth-child(2) {
+    font-weight: 700;
+    color: #495057;
+    font-size: 1.1rem;
+}
+
+.table tbody td:nth-child(3) {
+    font-weight: 700;
+    color: #28a745;
+    font-size: 1.2rem;
+}
+
+    /* Indicador visual para tareas completadas (opcional) */
+    .table tbody td:nth-child(3)::before {
+        margin-right: 8px;
+        color: #28a745;
+        font-weight: bold;
+    }
+
+.table tbody td:nth-child(4) {
+    font-weight: 800;
+    color: #297EA6;
+    font-size: 1.2rem;
+}
+
+/* Alerta cuando no hay datos */
+.alert-info {
+    background: linear-gradient(135deg, rgba(209, 236, 241, 0.95) 0%, rgba(184, 230, 241, 0.95) 100%);
+    border: none;
+    border-left: 6px solid #17a2b8;
+    border-radius: 15px;
+    padding: 20px 25px;
+    color: #0c5460;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    backdrop-filter: blur(10px);
+    margin-top: 30px;
+    text-align: center;
+    font-size: 1.1rem;
+}
+
+/* Animación para las filas de la tabla */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.table tbody tr {
+    animation: slideIn 0.5s ease-out;
+    animation-fill-mode: both;
+}
+
+    /* Retrasos escalonados para las filas */
+    .table tbody tr:nth-child(1) {
+        animation-delay: 0.1s;
+    }
+
+    .table tbody tr:nth-child(2) {
+        animation-delay: 0.2s;
+    }
+
+    .table tbody tr:nth-child(3) {
+        animation-delay: 0.3s;
+    }
+
+    .table tbody tr:nth-child(4) {
+        animation-delay: 0.4s;
+    }
+
+    .table tbody tr:nth-child(5) {
+        animation-delay: 0.5s;
+    }
+
+    .table tbody tr:nth-child(6) {
+        animation-delay: 0.6s;
+    }
+
+    .table tbody tr:nth-child(7) {
+        animation-delay: 0.7s;
+    }
+
+    .table tbody tr:nth-child(8) {
+        animation-delay: 0.8s;
+    }
+
+    .table tbody tr:nth-child(9) {
+        animation-delay: 0.9s;
+    }
+
+    .table tbody tr:nth-child(10) {
+        animation-delay: 1.0s;
+    }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+        padding-bottom: 12px;
+    }
+
+        h2::after {
+            width: 120px;
+        }
+
+    .btn-secondary {
+        width: 100%;
+        justify-content: center;
+        padding: 10px 20px;
+        margin-bottom: 20px;
+    }
+
+    .table {
+        font-size: 0.9rem;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    }
+
+        .table thead {
+            display: none;
+        }
+
+        .table, .table tbody, .table tr, .table td {
+            display: block;
+            width: 100%;
+        }
+
+            .table tr {
+                margin-bottom: 20px;
+                border-radius: 12px;
+                overflow: hidden;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+                background: rgba(255, 255, 255, 0.95);
+                padding: 15px;
+                position: relative;
+                border: 1px solid rgba(0,0,0,0.05);
+            }
+
+            .table td {
+                text-align: right;
+                padding: 12px 15px;
+                position: relative;
+                border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+                padding-left: 50%;
+            }
+
+                .table td::before {
+                    content: attr(data-label);
+                    position: absolute;
+                    left: 15px;
+                    font-weight: 700;
+                    color: #297EA6;
+                    text-align: left;
+                    white-space: nowrap;
+                }
+
+            /* Ocultar iconos en móvil (opcional) */
+            .table tbody td:nth-child(1)::before {
+                display: none;
+            }
+
+    .alert-info {
+        padding: 15px 20px;
+        font-size: 1rem;
+        margin-top: 20px;
+    }
+}
+
+@media (max-width: 576px) {
+    h2 {
+        font-size: 1.3rem;
+    }
+
+    .table td {
+        padding: 10px 15px;
+        padding-left: 45%;
+    }
+
+        .table td::before {
+            font-size: 0.9rem;
+        }
+
+    .alert-info {
+        padding: 15px;
+        font-size: 0.95rem;
+    }
+}
+
+/* Estilo para cuando la tabla está vacía */
+.table tbody:empty::after {
+    content: 'No hay datos para mostrar';
+    display: block;
+    text-align: center;
+    padding: 40px;
+    color: #6c757d;
+    font-style: italic;
+    font-size: 1.1rem;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 10px;
+    margin: 20px;
+    border: 2px dashed #dee2e6;
+}

@@ -3,7 +3,13 @@
 @{
     ViewData["Title"] = "Mis tareas del proyecto";
 }
+<head>
+    <link href="~/css/TareasEstCSS/TareaEstudiantes.css" rel="stylesheet" asp-append-version="true" />
 
+
+
+
+</head>
 <h2 class="text-center mt-4">Mis tareas del proyecto</h2>
 
 <div class="text-center mt-3">
@@ -33,11 +39,11 @@ else
 
             @if (tarea.EstaPorVencer)
             {
-                <span class="badge bg-warning text-dark mt-2">⚠️ ¡Esta tarea está por vencer!</span>
+                <span class="badge bg-warning text-dark mt-2"> ¡Esta tarea está por vencer!</span>
             }
             else if (tarea.EstaVencida)
             {
-                <span class="badge bg-danger mt-2">⛔ Tarea vencida</span>
+                <span class="badge bg-danger mt-2">Tarea vencida</span>
             }
         </div>
     }
