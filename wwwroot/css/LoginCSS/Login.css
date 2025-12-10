@@ -1,15 +1,13 @@
 ﻿
+
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap');
-
-
 
 body {
     background-image: url(../../Recursos/Imagen_FondoLogin.svg);
     background-repeat: no-repeat;
     background-size: cover;
     animation: animacionLogin 8s infinite alternate linear;
-    font-family: 'Nunito', sans-serif!important;
-}
+    font-family: 'Nunito', sans-serif;
 }
 
 @keyframes animacionLogin {
