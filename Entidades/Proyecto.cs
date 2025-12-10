@@ -12,5 +12,19 @@ namespace Gestor_de_Proyectos_Académicos.Entidades
 
         // Propiedad para el color del estado 
         public string ColorEstado { get; set; } = string.Empty;
+
+        public bool EstaPorFinalizar => FechaFinalProyecto.Date <= DateTime.Now.AddDays(5).Date
+                             && FechaFinalProyecto.Date >= DateTime.Now.Date;
+
+        public bool EstaVencido => FechaFinalProyecto.Date < DateTime.Now.Date;
+
+        public string ColorAviso =>
+        EstaVencido ? "danger" :
+        EstaPorFinalizar ? "warning" :
+        "secondary";
+
+
     }
+
+
 }

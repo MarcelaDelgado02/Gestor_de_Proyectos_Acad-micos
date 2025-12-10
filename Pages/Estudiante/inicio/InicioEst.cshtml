@@ -20,6 +20,39 @@
         <i class="fas fa-chart-line me-1"></i> Reporte Personal
     </a>
 
+    <!-- Avisos de proyectos por vencer -->
+    @if (Model.Proyectos != null && Model.Proyectos.Any())
+    {
+        <div class="alert alert-warning shadow-sm mt-3">
+            <h5 class="mb-2">
+                <i class="fas fa-exclamation-triangle me-2"></i>
+                Avisos importantes
+            </h5>
+
+            <ul class="mb-0">
+                @foreach (var proyecto in Model.Proyectos)
+                {
+                    var diasRestantes = (proyecto.FechaFinalProyecto.Date - DateTime.Now.Date).Days;
+
+                    if (diasRestantes >= 0)   // Ya lo filtraste en el BLL
+                    {
+                        <li class="mb-1">
+                            <strong>@proyecto.NombreProyecto</strong> —
+                            vence en
+                            <span class="text-danger fw-bold">@diasRestantes día(s)</span>.
+                        </li>
+                    }
+                }
+            </ul>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info shadow-sm mt-3">
+            <i class="fas fa-info-circle me-2"></i>
+            No tienes proyectos próximos a vencer en los próximos 5 días.
+        </div>
+    }
 
    
 

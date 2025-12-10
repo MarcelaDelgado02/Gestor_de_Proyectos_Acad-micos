@@ -38,7 +38,8 @@ namespace Gestor_de_Proyectos_Académicos.Pages.Estudiante.inicio
                     return;
                 }
 
-                Proyectos = proyectoBLL.ObtenerProyectos(CedulaUsuario);
+                Proyectos = proyectoBLL.ObtenerProyectosValidos(CedulaUsuario, 5);
+
 
                 if (Proyectos.Any())
                 {
