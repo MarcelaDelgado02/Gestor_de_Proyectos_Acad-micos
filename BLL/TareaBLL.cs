@@ -71,26 +71,21 @@ namespace Gestor_de_Proyectos_Académicos.BLL
 
         public List<Tarea> ObtenerAvisos(string cedula, int proyectoId, int diasAviso)
         {
-            DateTime hoy = DateTime.Now.Date;
-            // Obtener tareas del DAL por PROYECTO
             var tareas = tareaDAL.ObtenerTareasPorProyecto(proyectoId);
-            // Obtener rol del usuario
-            int rol = usuarioDAL.ObtenerRolPorCedula(cedula);
-            //  Filtrar según el rol
-            if (rol == 2) // estudiante
-            {
-                tareas = tareas.Where(t => t.CedulaEstudiante == cedula).ToList();
-            }
-            // si es profesor (1), no se filtra nada
-            // Filtrar según los días
+
+            DateTime hoy = DateTime.Now.Date;
+
             return tareas
                 .Where(t =>
-                    t.FechaLimiteTarea.Date >= hoy &&                          // la fecha no pasó
-                    (t.FechaLimiteTarea.Date - hoy).TotalDays <= diasAviso     // está dentro del rango
+                    t.CedulaEstudiante == cedula &&            // por estudiante
+                    t.EstadoTarea != "Completada" &&           // excluir tareas completadas
+                    t.FechaLimiteTarea.Date >= hoy &&
+                    (t.FechaLimiteTarea.Date - hoy).TotalDays <= diasAviso
                 )
                 .OrderBy(t => t.FechaLimiteTarea)
                 .ToList();
         }
+
 
 
 
