@@ -54,7 +54,7 @@ namespace Gestor_de_Proyectos_Académicos.Pages.Estudiante.Tareas
 
                 string cedula = HttpContext.Session.GetString("Cedula") ?? "";
                 Tareas = tareaBLL.ObtenerTareasPorProyecto(IdProyecto, cedula);
-
+                Avisos = tareaBLL.ObtenerAvisos(cedula, IdProyecto, 5);
                 if (!Tareas.Any())
                 {
                     Mensaje = "Aún no se han asignado tareas para este proyecto.";
@@ -127,8 +127,8 @@ namespace Gestor_de_Proyectos_Académicos.Pages.Estudiante.Tareas
 
             try
             {
-               
-               
+
+
 
                 tareaBLL.ActualizarEstadoTareaEstudiante(idTarea, cedulaEstudiante, nuevoEstado);
 
@@ -147,5 +147,20 @@ namespace Gestor_de_Proyectos_Académicos.Pages.Estudiante.Tareas
         {
             return tarea.EstadoTarea == "Vencida" || tarea.FechaLimiteTarea < DateTime.Now;
         }
+
+        public List<Tarea> Avisos { get; set; } = new List<Tarea>();
+
+
+        public IActionResult OnGetAvisos(int idProyecto)
+        {
+            string cedula = HttpContext.Session.GetString("Cedula");
+            int diasAviso = 5; 
+
+            Avisos = tareaBLL.ObtenerAvisos(cedula, idProyecto, diasAviso);
+
+            return Page();
+        }
+
+
     }
 }

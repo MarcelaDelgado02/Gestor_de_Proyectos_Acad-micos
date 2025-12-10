@@ -15,6 +15,33 @@
         Volver
     </a>
 </div>
+@if (Model.Avisos == null || !Model.Avisos.Any())
+{
+    <div class="alert alert-info">
+        🎉 No tienes avisos por el momento. ¡Todo está al día!
+    </div>
+}
+else
+{
+    @foreach (var tarea in Model.Avisos)
+    {
+        <div class="alert alert-@tarea.ColorAviso shadow-sm p-3 mb-3 rounded">
+            <h5 class="fw-bold mb-1">@tarea.TituloTarea</h5>
+            <small class="d-block text-muted">
+                Fecha límite: @tarea.FechaLimiteTarea.ToString("dd/MM/yyyy")
+            </small>
+
+            @if (tarea.EstaPorVencer)
+            {
+                <span class="badge bg-warning text-dark mt-2">⚠️ ¡Esta tarea está por vencer!</span>
+            }
+            else if (tarea.EstaVencida)
+            {
+                <span class="badge bg-danger mt-2">⛔ Tarea vencida</span>
+            }
+        </div>
+    }
+}
 
 <!-- Mostrar mensajes -->
 @if (!string.IsNullOrEmpty(Model.Mensaje))

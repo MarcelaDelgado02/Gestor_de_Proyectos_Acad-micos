@@ -18,5 +18,15 @@
         // creador  tarea
         public int IDUsuarioCreador { get; set; }
         public DateTime FechaCreacion { get; set; }
+
+        public bool EstaPorVencer => FechaLimiteTarea.Date <= DateTime.Now.AddDays(5).Date
+                                  && FechaLimiteTarea.Date >= DateTime.Now.Date;
+
+        public bool EstaVencida => FechaLimiteTarea.Date < DateTime.Now.Date;
+
+        public string ColorAviso =>
+            EstaVencida ? "danger" :
+            EstaPorVencer ? "warning" :
+            "secondary";
     }
 }
