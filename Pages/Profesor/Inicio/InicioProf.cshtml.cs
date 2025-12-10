@@ -26,6 +26,7 @@ namespace Gestor_de_Proyectos_Académicos.Pages.Profesor.Inicio
         public string CedulaUsuario { get; set; }
         public string NombreUsuario { get; set; }
         public List<Proyecto> Proyectos { get; set; } = new List<Proyecto>();
+        public List<Proyecto> ProyectosAviso { get; set; }
         public string Mensaje { get; set; } = string.Empty;
         public bool TieneProyectos => Proyectos != null && Proyectos.Any();
 
@@ -43,6 +44,7 @@ namespace Gestor_de_Proyectos_Académicos.Pages.Profesor.Inicio
             try
             {
                 Proyectos = proyectoBLL.ObtenerProyectos(CedulaUsuario);
+                ProyectosAviso = proyectoBLL.ObtenerProyectosValidos(CedulaUsuario, 5);
                 PrepararDatosVista();
 
                 EstudiantesDisponibles = usuarioBLL.ObtenerEstudiantesAsignarProyecto(0);

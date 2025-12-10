@@ -21,6 +21,7 @@ namespace Gestor_de_Proyectos_Académicos.Pages.Estudiante.inicio
         public string CedulaUsuario { get; set; }
         public string NombreUsuario { get; set; }
         public List<Proyecto> Proyectos { get; set; }
+        public List<Proyecto> ProyectosAviso { get; set; }
         public string Mensaje { get; set; }
         public bool TieneProyectos => Proyectos != null && Proyectos.Any();
 
@@ -38,7 +39,11 @@ namespace Gestor_de_Proyectos_Académicos.Pages.Estudiante.inicio
                     return;
                 }
 
-                Proyectos = proyectoBLL.ObtenerProyectosValidos(CedulaUsuario, 5);
+                // 1. TODOS LOS PROYECTOS
+                Proyectos = proyectoBLL.ObtenerProyectos(CedulaUsuario);
+
+                // 2. SOLO LOS QUE SON AVISO (<= 5 días)
+                ProyectosAviso = proyectoBLL.ObtenerProyectosValidos(CedulaUsuario, 5);
 
 
                 if (Proyectos.Any())

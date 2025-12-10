@@ -88,17 +88,17 @@ namespace Gestor_de_Proyectos_Académicos.BLL
         {
             var proyectos = proyectoDAL.ObtenerProyectos(cedula);
 
-            DateTime hoy = DateTime.Now.Date;
-
             return proyectos
                 .Where(p =>
-                    p.EstadoProyecto.ToLower() != "completado" &&     
-                    p.FechaFinalProyecto.Date >= hoy &&               
-                    (p.FechaFinalProyecto.Date - hoy).TotalDays <= diasAviso
+                    p.EstadoProyecto.ToLower() != "completado" &&
+                    p.DiasRestantes >= 0 &&
+                    p.DiasRestantes <= diasAviso
                 )
                 .OrderBy(p => p.FechaFinalProyecto)
                 .ToList();
         }
+
+
 
     }
 

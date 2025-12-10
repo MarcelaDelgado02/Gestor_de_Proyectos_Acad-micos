@@ -21,7 +21,7 @@
     </a>
 
     <!-- Avisos de proyectos por vencer -->
-    @if (Model.Proyectos != null && Model.Proyectos.Any())
+    @if (Model.Proyectos != null && Model.ProyectosAviso.Any())
     {
         <div class="alert alert-warning shadow-sm mt-3">
             <h5 class="mb-2">
@@ -30,7 +30,7 @@
             </h5>
 
             <ul class="mb-0">
-                @foreach (var proyecto in Model.Proyectos)
+                @foreach (var proyecto in Model.ProyectosAviso)
                 {
                     var diasRestantes = (proyecto.FechaFinalProyecto.Date - DateTime.Now.Date).Days;
 

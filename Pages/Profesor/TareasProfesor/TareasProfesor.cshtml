@@ -6,6 +6,35 @@
 
 <div class="container">
     <h2>Gestión de Tareas  </h2>
+    @if (Model.Avisos != null && Model.Avisos.Any())
+    {
+        <div class="alert alert-warning mt-3">
+            <h4 class="alert-heading">🔔 Avisos de tareas próximas a vencer</h4>
+            <ul class="list-group mt-2">
+
+                @foreach (var aviso in Model.Avisos)
+                {
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <strong>@aviso.TituloTarea</strong><br />
+                            <small>Vence: @aviso.FechaLimiteTarea.ToString("dd/MM/yyyy")</small>
+                        </div>
+
+                        <span class="badge bg-danger rounded-pill">
+                            @( (aviso.FechaLimiteTarea.Date - DateTime.Now.Date).Days ) días restantes
+                        </span>
+                    </li>
+                }
+            </ul>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-success mt-3">
+            No hay tareas próximas a vencer.
+        </div>
+    }
+
 
     @if (!string.IsNullOrEmpty(Model.Mensaje))
     {

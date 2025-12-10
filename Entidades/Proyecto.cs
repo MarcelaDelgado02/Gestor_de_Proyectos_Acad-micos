@@ -15,6 +15,8 @@ namespace Gestor_de_Proyectos_Académicos.Entidades
 
         public bool EstaPorFinalizar => FechaFinalProyecto.Date <= DateTime.Now.AddDays(5).Date
                              && FechaFinalProyecto.Date >= DateTime.Now.Date;
+        public int DiasRestantes =>
+        (FechaFinalProyecto.Date - DateTime.Now.Date).Days;
 
         public bool EstaVencido => FechaFinalProyecto.Date < DateTime.Now.Date;
 

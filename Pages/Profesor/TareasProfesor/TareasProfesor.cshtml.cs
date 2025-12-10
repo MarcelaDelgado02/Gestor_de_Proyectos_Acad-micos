@@ -40,6 +40,8 @@ namespace Gestor_de_Proyectos_Académicos.Pages.Profesor.TareasProfesor
 
         public List<Tarea> Tareas { get; set; } = new();
         public List<Usuario> Estudiantes { get; set; } = new();
+        public List<Tarea> Avisos { get; set; } = new List<Tarea>();
+
         public List<SelectListItem> Estados { get; set; } = new();
 
         [TempData]
@@ -61,7 +63,8 @@ namespace Gestor_de_Proyectos_Académicos.Pages.Profesor.TareasProfesor
                 string cedulaUsuario = HttpContext.Session.GetString("Cedula") ?? "";
 
                 Tareas = tareaBLL.ObtenerTareasPorProyecto(IdProyecto, cedulaUsuario);
-
+                int diasAviso = 5;
+                Avisos = tareaBLL.ObtenerAvisos(cedulaUsuario, IdProyecto, diasAviso);
                 Estudiantes = usuarioBLL.ObtenerEstudiantesPorProyecto(IdProyecto);
                 Estados = new List<SelectListItem>
                 {
@@ -228,6 +231,8 @@ namespace Gestor_de_Proyectos_Académicos.Pages.Profesor.TareasProfesor
             }
         }
 
+
+        
 
     }
 }
